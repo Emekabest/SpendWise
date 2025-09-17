@@ -131,6 +131,7 @@ if (!fontsLoaded) {
             </View>
 
 
+
             <View className="h-[25%] px-4 pt-3 flex-col justify-center">
                 <Link href="/createaccountscreen" asChild>
                     <TouchableOpacity className="h-16 w-[100%] mb-4 rounded-full items-center justify-center" style={{backgroundColor:AppDetails.color.iconColors}}>
@@ -138,11 +139,12 @@ if (!fontsLoaded) {
                     </TouchableOpacity>
                 </Link>
 
+
                 <TouchableOpacity className="h-16 w-[100%] rounded-full items-center justify-center" style={{backgroundColor:AppDetails.color.iconColors}}>
                         <Text className="font-monasans-regular text-xl color-white">Login</Text>
                 </TouchableOpacity>
             </View>
-                        </View>
+            </View>
         </View>
     )
 }
