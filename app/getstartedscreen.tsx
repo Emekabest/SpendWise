@@ -1,5 +1,6 @@
 import { useFonts } from "expo-font";
 import { Image } from "expo-image";
+import { Link } from "expo-router";
 import React, { useRef, useState } from "react";
 import {
   Dimensions,
@@ -131,9 +132,11 @@ if (!fontsLoaded) {
 
 
             <View className="h-[25%] px-4 pt-3 flex-col justify-center">
-                <TouchableOpacity className="h-16 w-[100%] mb-4 rounded-full items-center justify-center" style={{backgroundColor:AppDetails.color.iconColors}}>
-                        <Text className="font-monasans-regular text-xl color-white">Create Account</Text>
-                </TouchableOpacity>
+                <Link href="/createaccountscreen" asChild>
+                    <TouchableOpacity className="h-16 w-[100%] mb-4 rounded-full items-center justify-center" style={{backgroundColor:AppDetails.color.iconColors}}>
+                            <Text className="font-monasans-regular text-xl color-white">Create Account</Text>
+                    </TouchableOpacity>
+                </Link>
 
                 <TouchableOpacity className="h-16 w-[100%] rounded-full items-center justify-center" style={{backgroundColor:AppDetails.color.iconColors}}>
                         <Text className="font-monasans-regular text-xl color-white">Login</Text>

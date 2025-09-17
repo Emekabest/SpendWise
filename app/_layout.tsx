@@ -34,7 +34,7 @@ export default function RootLayout() {
           <StatusBar barStyle="default"/>
           <Stack>
             <Stack.Screen name='getstartedscreen' options={{headerShown:false}}/>
-
+            <Stack.Screen name='createaccountscreen' options={{headerShown:false}}/>
 
           </Stack>
         </SafeAreaView>
