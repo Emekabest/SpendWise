@@ -2,34 +2,41 @@ import { useFonts } from "expo-font";
 import { Image } from "expo-image";
 import React, { useRef, useState } from "react";
 import {
-    Dimensions,
-    FlatList,
-    Text,
-    TouchableOpacity,
-    View,
-    ViewToken,
+  Dimensions,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewToken,
 } from "react-native";
 import ActivateFonts from "./service/ActivateFonts";
 import AppDetails from "./service/AppService";
 
+
+
 const { width } = Dimensions.get("window");
+
+
+
 
 const slides = [
   {
     id: "1",
     image:
-      "https://img.freepik.com/free-vector/budget-management-app-interface_23-2148613473.jpg",
+      "https://www.arigatovideos.com/wp-content/uploads/2020/01/Lottie-animation-how-why-to-use-it.jpg",
     title: "Gain total control of your money",
     subtitle: "Become your own money manager and make every cent count",
   },
+
   {
     id: "2",
     image:
-      "https://img.freepik.com/free-vector/financial-planning-abstract-concept-illustration_335657-3893.jpg",
+      "https://i.postimg.cc/nzckDMmQ/Money-Goes.jpg",
     title: "Know where your money goes",
     subtitle:
       "Track your transaction easily, with categories and financial report",
   },
+
   {
     id: "3",
     image:
@@ -37,6 +44,7 @@ const slides = [
     title: "Planning ahead",
     subtitle: "Setup your budget for each category so you in control",
   },
+
 ];
 
 
@@ -75,9 +83,9 @@ const Pagination = ({ currentIndex }: { currentIndex: number }) => {
 };
 
 const getStartedScreen = ()=>{
-    
-    const [fontsLoaded] = useFonts(ActivateFonts);
-    
+        const [fontsLoaded] = useFonts(ActivateFonts); 
+
+        
     const [currentIndex, setCurrentIndex] = useState(0);
     const ref = useRef<FlatList>(null);
 
@@ -91,6 +99,9 @@ const getStartedScreen = ()=>{
 
     const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
 
+if (!fontsLoaded) {
+    return <View></View>; // don’t render UI until fonts are loaded
+  }
     return(
         <View className="h-[100%] bg-white">
             <View className="h-[25%] items-center justify-center">
