@@ -84,11 +84,12 @@ const Pagination = ({ currentIndex }: { currentIndex: number }) => {
 };
 
 const getStartedScreen = ()=>{
-        const [fontsLoaded] = useFonts(ActivateFonts); 
+    const [fontsLoaded] = useFonts(ActivateFonts); 
 
-        
+    
     const [currentIndex, setCurrentIndex] = useState(0);
     const ref = useRef<FlatList>(null);
+
 
     const onViewableItemsChanged = useRef(
       ({ viewableItems }: { viewableItems: Array<ViewToken> }) => {
@@ -98,9 +99,11 @@ const getStartedScreen = ()=>{
       }
     ).current;
 
-    const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
 
-if (!fontsLoaded) {
+    const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
+    
+
+  if (!fontsLoaded) {
     return <View></View>; // don’t render UI until fonts are loaded
   }
     return(
@@ -108,6 +111,7 @@ if (!fontsLoaded) {
             <View className="h-[25%] items-center justify-center">
                 <Text className="font-monasans-bold text-3xl color-[#333]">SpendWise</Text>
             </View>
+
 
 
             <View className="h-[50%]">

@@ -11,7 +11,7 @@ import "../global.css";
 SplashScreen.preventAutoHideAsync();
 
 
-export default function RootLayout() {
+export default function RootLayout(){
 
   useEffect(() => {
     const prepare = async () => {
@@ -23,10 +23,10 @@ export default function RootLayout() {
     prepare();
   }, []);
 
-  
 
   const insets = useSafeAreaInsets();
   const usableHeight = Dimensions.get('screen').height;
+
 
 
   return (
@@ -36,7 +36,6 @@ export default function RootLayout() {
             <Stack.Screen name='getstartedscreen' options={{headerShown:false}}/>
             <Stack.Screen name='createaccountscreen' options={{headerShown:false}}/>
             <Stack.Screen name='login' options={{headerShown:false}}/>
-
           </Stack>
         </SafeAreaView>
   );
