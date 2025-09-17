@@ -32,7 +32,7 @@ const slides = [
   {
     id: "2",
     image:
-      "https://i.postimg.cc/nzckDMmQ/Money-Goes.jpg",
+      "https://www.arigatovideos.com/wp-content/uploads/2020/01/diy-animations-vs-explainer-video-agency.jpg",
     title: "Know where your money goes",
     subtitle:
       "Track your transaction easily, with categories and financial report",
@@ -140,9 +140,11 @@ if (!fontsLoaded) {
                 </Link>
 
 
-                <TouchableOpacity className="h-16 w-[100%] rounded-full items-center justify-center" style={{backgroundColor:AppDetails.color.iconColors}}>
-                        <Text className="font-monasans-regular text-xl color-white">Login</Text>
-                </TouchableOpacity>
+                <Link href="/login" asChild>
+                  <TouchableOpacity className="h-16 w-[100%] rounded-full items-center justify-center" style={{backgroundColor:AppDetails.color.iconColors}}>
+                          <Text className="font-monasans-regular text-xl color-white">Login</Text>
+                  </TouchableOpacity>
+                 </Link>
             </View>
             </View>
         </View>

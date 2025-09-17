@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Stack, useRouter } from 'expo-router';
+import { Link, Stack, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
     KeyboardAvoidingView,
@@ -11,6 +11,7 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
+import AppDetails from './service/AppService';
 
 const CreateAccountScreen = () => {
     const [firstName, setFirstName] = useState('');
@@ -20,13 +21,14 @@ const CreateAccountScreen = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const router = useRouter();
+    
 
     const handleCreateAccount = () => {
-        // TODO: Add account creation logic (e.g., validation, API call)
         console.log({ firstName, lastName, email, phone, password, confirmPassword });
-        // On success, you might want to navigate the user to the main app
-        // router.replace('/(tabs)/home');
+
     };
+
+
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -114,11 +116,21 @@ const CreateAccountScreen = () => {
                         </View>
 
                         <TouchableOpacity
-                            className="bg-blue-600 py-4 rounded-lg w-full items-center shadow-md"
+                            className=" py-4 rounded-full w-full items-center shadow-md"
                             onPress={handleCreateAccount}
+                            style={{backgroundColor:AppDetails.color.iconColors}}
                         >
-                            <Text className="text-white text-lg font-bold">Create Account</Text>
+                            <Text className="text-white text-lg font-monasans-bold">Create Account</Text>
                         </TouchableOpacity>
+
+                        <View className="flex-row justify-center mt-6">
+                            <Text className="text-gray-500">Already a member? </Text>
+                            <Link href="/login" asChild>
+                                <TouchableOpacity>
+                                    <Text style={{color:AppDetails.color.iconColors}} className="font-monasans-light">Login</Text>
+                                </TouchableOpacity>
+                            </Link>
+                        </View>
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>

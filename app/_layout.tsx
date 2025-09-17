@@ -30,11 +30,12 @@ export default function RootLayout() {
 
 
   return (
-        <SafeAreaView style={{height: usableHeight, backgroundColor:"#fff"}}>
-          <StatusBar barStyle="default"/>
+        <SafeAreaView style={{height: usableHeight, backgroundColor:"#fff"}} edges={["top", "left", "right"]}>
+          <StatusBar barStyle="dark-content"/>
           <Stack>
             <Stack.Screen name='getstartedscreen' options={{headerShown:false}}/>
             <Stack.Screen name='createaccountscreen' options={{headerShown:false}}/>
+            <Stack.Screen name='login' options={{headerShown:false}}/>
 
           </Stack>
         </SafeAreaView>
