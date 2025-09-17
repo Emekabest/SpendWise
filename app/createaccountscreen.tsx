@@ -16,14 +16,14 @@ const CreateAccountScreen = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
-    const [nin, setNin] = useState('');
+    const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const router = useRouter();
 
     const handleCreateAccount = () => {
         // TODO: Add account creation logic (e.g., validation, API call)
-        console.log({ firstName, lastName, email, nin, password, confirmPassword });
+        console.log({ firstName, lastName, email, phone, password, confirmPassword });
         // On success, you might want to navigate the user to the main app
         // router.replace('/(tabs)/home');
     };
@@ -81,12 +81,12 @@ const CreateAccountScreen = () => {
                         </View>
 
                         <View className="w-full mb-4">
-                            <Text className="text-gray-600 mb-2 ml-1 font-medium">NIN</Text>
+                            <Text className="text-gray-600 mb-2 ml-1 font-medium">Phone</Text>
                             <TextInput
                                 className="border border-gray-300 p-4 rounded-lg w-full bg-gray-50"
-                                placeholder="Enter your National Identification Number"
-                                value={nin}
-                                onChangeText={setNin}
+                                placeholder="Enter your phone number"
+                                value={phone}
+                                onChangeText={setPhone}
                                 keyboardType="numeric"
                             />
                         </View>
