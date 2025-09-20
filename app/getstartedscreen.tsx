@@ -112,10 +112,9 @@ const getStartedScreen = ()=>{
                 <Text className="font-monasans-bold text-3xl color-[#333]">SpendWise</Text>
             </View>
 
-
+          
 
             <View className="h-[50%]">
-
             <View className="h-[100%] justify-center">
               <FlatList
                 ref={ref}
