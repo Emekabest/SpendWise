@@ -11,19 +11,28 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
+import SigninController from './controller/SigninController';
 import AppDetails from './service/AppService';
+
+
 
 const LoginScreen = () => {
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const router = useRouter();
 
+    const [formFeedbackMsg, setFormFeedbackMsg] = useState('');
 
-    const handleLogin = () => {
-        // TODO: Add login logic (e.g., validation, API call)
-        console.log({ phone, password });
-        // On success, navigate to the main app
-        // router.replace('/(tabs)/home');
+
+
+
+    const handleLogin = async() => {
+        
+        const message = await SigninController(phone, password)
+
+        setFormFeedbackMsg(message?.status === 400 ? message.message : '')
+
+        
     };
 
     return (
@@ -65,6 +74,9 @@ const LoginScreen = () => {
                                 secureTextEntry
                             />
                         </View>
+
+                        <Text className='text-red-600 text-center font-monasans-light mb-5 text-xs'>{formFeedbackMsg}</Text>
+                        
 
                         <TouchableOpacity
                             className=" py-4 rounded-full w-full items-center shadow-md"

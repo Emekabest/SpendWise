@@ -3,6 +3,7 @@ import { Link, Stack, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import SignupController from './controller/SignupController';
+import Loader from "./loader";
 import AppDetails from './service/AppService';
 
 
@@ -17,6 +18,7 @@ const CreateAccountScreen = () => {
     const router = useRouter();
     
 
+    const [isLoading, setIsLoading] = useState(false);
     const [formFeedbackMsg, setFormFeedbackMsg] = useState('');
 
 
@@ -24,9 +26,9 @@ const CreateAccountScreen = () => {
 
 
     const handleCreateAccount = async()=> {
-    //   loaderStore.setLoaderStatus(true)
-    //   setIsLoader(true)
-
+        setIsLoading(true);
+        setFormFeedbackMsg('');
+    
           const message =  await SignupController(firstName, lastName, email, phone, password, confirmPassword)
           
           if (message?.status === 400 || message.status === 403){
@@ -35,6 +37,8 @@ const CreateAccountScreen = () => {
           else if (message.status === 200){
 
             console.log("Account successfully created")
+            // You would typically navigate the user away here, e.g.:
+            // router.replace('/(tabs)/home');
           }
           
 
@@ -43,7 +47,7 @@ const CreateAccountScreen = () => {
 
 
 
-
+        setIsLoading(false);
     };
 
 
@@ -56,6 +60,7 @@ const CreateAccountScreen = () => {
             >
                 <Stack.Screen options={{ headerShown: false }} />
                 <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }} keyboardShouldPersistTaps="handled">
+
                     <View className="p-5">
                         <TouchableOpacity onPress={() => router.back()} className="absolute top-4 left-4 z-10">
                             <Ionicons name="arrow-back" size={28} color="black" />
@@ -160,6 +165,7 @@ const CreateAccountScreen = () => {
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
+            {isLoading && <Loader />}
         </SafeAreaView>
     );
 };
