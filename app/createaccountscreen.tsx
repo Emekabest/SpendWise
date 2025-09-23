@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Link, Stack, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -37,11 +38,10 @@ const CreateAccountScreen = () => {
           }
           else if (message.status === 200){
 
+            await AsyncStorage.setItem("is-launched", "true")
+            await AsyncStorage.setItem("phone", phone.trim())
 
-        //     await AsyncStorage.setItem("hasLaunched", "true")
-        //    await AsyncStorage.setItem("matric-number", nin.trim());
-
-                router.push("/homescreen")
+            router.push("/homescreen")
           }
           
 

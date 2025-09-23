@@ -27,6 +27,7 @@ const LoginScreen = () => {
 
     const [isLoading, setIsLoading] = useState(false);    
     const [formFeedbackMsg, setFormFeedbackMsg] = useState('');
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
 
 
@@ -83,13 +84,18 @@ const LoginScreen = () => {
 
                         <View className="w-full mb-6">
                             <Text className="text-gray-600 mb-2 ml-1 font-medium">Password</Text>
-                            <TextInput
-                                className="border border-gray-300 p-4 rounded-lg w-full bg-gray-50"
-                                placeholder="Enter your password"
-                                value={password}
-                                onChangeText={setPassword}
-                                secureTextEntry
-                            />
+                            <View className="relative justify-center">
+                                <TextInput
+                                    className="border border-gray-300 p-4 rounded-lg w-full bg-gray-50"
+                                    placeholder="Enter your password"
+                                    value={password}
+                                    onChangeText={setPassword}
+                                    secureTextEntry={!isPasswordVisible}
+                                />
+                                <TouchableOpacity onPress={() => setIsPasswordVisible(!isPasswordVisible)} className="absolute right-4">
+                                    <Ionicons name={isPasswordVisible ? 'eye-off' : 'eye'} size={24} color="gray" />
+                                </TouchableOpacity>
+                            </View>
                         </View>
 
 

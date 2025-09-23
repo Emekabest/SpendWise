@@ -1,10 +1,12 @@
 import 'react-native-reanimated';
 
-import { SplashScreen, Stack } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { router, SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { Dimensions, StatusBar } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import "../global.css";
+
 
 
 
@@ -26,6 +28,41 @@ export default function RootLayout(){
 
   const insets = useSafeAreaInsets();
   const usableHeight = Dimensions.get('screen').height;
+
+  useEffect(() => {
+    const checkIfLaunched = async () => {
+    
+      try {
+
+        const isLaunched = await AsyncStorage.getItem('is-launched');
+        const isUser = await AsyncStorage.getItem("phone");
+
+
+        if (isLaunched === 'true' && isUser){
+
+            router.replace('/homescreen' as any);
+        }
+        else if(isLaunched==="true" && !isUser){
+
+            router.replace('/loginscreen' as any);
+        }
+        else{
+
+          router.replace('/getstartedscreen' as any);
+        }
+        
+      } catch (e) {
+
+        //404 or 500 page error here...
+        console.error('Failed to load launch status');
+      } finally {
+
+      }
+    };
+
+
+    checkIfLaunched();
+  }, []);
 
 
 

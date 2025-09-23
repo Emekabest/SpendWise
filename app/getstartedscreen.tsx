@@ -143,7 +143,7 @@ const getStartedScreen = ()=>{
                 </Link>
 
 
-                <Link href="/login" asChild>
+                <Link href="/loginscreen" asChild>
                   <TouchableOpacity className="h-16 w-[100%] rounded-full items-center justify-center" style={{backgroundColor:AppDetails.color.iconColors}}>
                           <Text className="font-monasans-regular text-xl color-white">Login</Text>
                   </TouchableOpacity>
