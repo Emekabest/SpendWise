@@ -33,6 +33,7 @@ export default function RootLayout(){
     const checkIfLaunched = async () => {
     
       try {
+        // await AsyncStorage.clear()
 
         const isLaunched = await AsyncStorage.getItem('is-launched');
         const isUser = await AsyncStorage.getItem("phone");

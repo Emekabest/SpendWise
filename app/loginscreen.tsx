@@ -35,7 +35,7 @@ const LoginScreen = () => {
 
 
     const handleLogin = async() => {
-        if (password == ""){
+        if (phone && password == ""){
             setFormFeedbackMsg('Password is required')
             return
         }
@@ -55,13 +55,16 @@ const LoginScreen = () => {
             await AsyncStorage.setItem("is-launched", "true")
             await AsyncStorage.setItem("phone", phone.trim())
 
-            // router.dismissAll()   
-            router.push("/homescreen")
+            
+            router.dismissAll()   
+            router.replace("/homescreen")
           }
 
 
         setIsLoading(false);
     };
+
+
 
 
 

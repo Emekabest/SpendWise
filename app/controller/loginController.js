@@ -30,6 +30,7 @@ const loginController = async(phone, password)=>{
     
     } catch (error) {
 
+        console.log("This is error::"+error)
 
         return error.code
     }

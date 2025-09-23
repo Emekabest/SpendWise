@@ -42,7 +42,7 @@ const CreateAccountScreen = () => {
             await AsyncStorage.setItem("is-launched", "true")
             await AsyncStorage.setItem("phone", phone.trim())
 
-            router.push("/homescreen")
+            router.push("/loginscreen")
           }
           
 
