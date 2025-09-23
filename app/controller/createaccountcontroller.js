@@ -1,7 +1,7 @@
 import axios from "axios";
 import TextFieldService from "../service/TextFieldService";
 
-const SignupController = async(firstname, lastname, email, phone, password, confirmPassword)=>{
+const CreateAccountController = async(firstname, lastname, email, phone, password, confirmPassword)=>{
 
     let signupFeedbackMessage = TextFieldService(["firstname", "lastname", "email", "phone", "password", "confirmPassword"], {firstname, lastname, email, phone, password, confirmPassword})
 
@@ -42,4 +42,4 @@ const SignupController = async(firstname, lastname, email, phone, password, conf
 
 }
 
-export default SignupController;
+export default CreateAccountController;

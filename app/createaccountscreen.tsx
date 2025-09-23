@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Link, Stack, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import SignupController from './controller/SignupController';
+import CreateAccountController from './controller/createaccountcontroller';
 import Loader from "./loader";
 import AppDetails from './service/AppService';
 
@@ -29,17 +29,21 @@ const CreateAccountScreen = () => {
         setIsLoading(true);
         setFormFeedbackMsg('');
     
-          const message =  await SignupController(firstName, lastName, email, phone, password, confirmPassword)
+          const message =  await CreateAccountController(firstName, lastName, email, phone, password, confirmPassword)
           
           if (message?.status === 400 || message.status === 403){
                 setFormFeedbackMsg(message.message)
+
           }
           else if (message.status === 200){
 
-            
+
+        //     await AsyncStorage.setItem("hasLaunched", "true")
+        //    await AsyncStorage.setItem("matric-number", nin.trim());
+
+                router.push("/homescreen")
           }
           
-
 
 
         setIsLoading(false);
@@ -151,7 +155,7 @@ const CreateAccountScreen = () => {
 
                         <View className="flex-row justify-center mt-6">
                             <Text className="text-gray-500">Already a member? </Text>
-                            <Link href="/login" asChild>
+                            <Link href="/loginscreen" asChild>
                                 <TouchableOpacity>
                                     <Text style={{color:AppDetails.color.iconColors}} className="font-monasans-light">Login</Text>
                                 </TouchableOpacity>
