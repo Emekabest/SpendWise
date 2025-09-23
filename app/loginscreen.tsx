@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Link, Stack, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
@@ -45,6 +46,18 @@ const LoginScreen = () => {
 
 
         setFormFeedbackMsg(message?.status === 403 ? message.message : '')
+        if (message?.status === 403 || message.status === 400){
+                setFormFeedbackMsg(message.message)
+
+          }
+          else if (message.status === 200){
+
+            await AsyncStorage.setItem("is-launched", "true")
+            await AsyncStorage.setItem("phone", phone.trim())
+
+            // router.dismissAll()   
+            router.push("/homescreen")
+          }
 
 
         setIsLoading(false);
@@ -103,6 +116,7 @@ const LoginScreen = () => {
                         
 
                         <TouchableOpacity
+                            activeOpacity={1}
                             className=" py-4 rounded-full w-full items-center shadow-md"
                             onPress={handleLogin}
                             style={{ backgroundColor: AppDetails.color.iconColors }}
@@ -121,6 +135,7 @@ const LoginScreen = () => {
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
+
             {isLoading && <Loader />}
         </SafeAreaView>
     );

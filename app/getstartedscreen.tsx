@@ -137,14 +137,14 @@ const getStartedScreen = ()=>{
 
             <View className="h-[25%] px-4 pt-3 flex-col justify-center">
                 <Link href="/createaccountscreen" asChild>
-                    <TouchableOpacity className="h-16 w-[100%] mb-4 rounded-full items-center justify-center" style={{backgroundColor:AppDetails.color.iconColors}}>
+                    <TouchableOpacity activeOpacity={1} className="h-16 w-[100%] mb-4 rounded-full items-center justify-center" style={{backgroundColor:AppDetails.color.iconColors}}>
                             <Text className="font-monasans-regular text-xl color-white">Create Account</Text>
                     </TouchableOpacity>
                 </Link>
 
 
                 <Link href="/loginscreen" asChild>
-                  <TouchableOpacity className="h-16 w-[100%] rounded-full items-center justify-center" style={{backgroundColor:AppDetails.color.iconColors}}>
+                  <TouchableOpacity activeOpacity={1} className="h-16 w-[100%] rounded-full items-center justify-center" style={{backgroundColor:AppDetails.color.iconColors}}>
                           <Text className="font-monasans-regular text-xl color-white">Login</Text>
                   </TouchableOpacity>
                  </Link>
