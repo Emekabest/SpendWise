@@ -36,14 +36,9 @@ const CreateAccountScreen = () => {
           }
           else if (message.status === 200){
 
-            console.log("Account successfully created")
-            // You would typically navigate the user away here, e.g.:
-            // router.replace('/(tabs)/home');
+            
           }
           
-
-
-
 
 
 

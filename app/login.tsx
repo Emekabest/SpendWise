@@ -11,8 +11,11 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import SigninController from './controller/SigninController';
+import loginController from './controller/loginController';
+import Loader from './loader';
 import AppDetails from './service/AppService';
+
+
 
 
 
@@ -21,19 +24,32 @@ const LoginScreen = () => {
     const [password, setPassword] = useState('');
     const router = useRouter();
 
+
+    const [isLoading, setIsLoading] = useState(false);    
     const [formFeedbackMsg, setFormFeedbackMsg] = useState('');
 
 
 
 
+
     const handleLogin = async() => {
-        
-        const message = await SigninController(phone, password)
+        if (password == ""){
+            setFormFeedbackMsg('Password is required')
+            return
+        }
 
-        setFormFeedbackMsg(message?.status === 400 ? message.message : '')
-
+        setIsLoading(true);
         
+        const message = await loginController(phone, password)
+
+
+        setFormFeedbackMsg(message?.status === 403 ? message.message : '')
+
+
+        setIsLoading(false);
     };
+
+
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -52,6 +68,7 @@ const LoginScreen = () => {
                             <Text className="text-3xl font-bold text-gray-800">Login</Text>
                             <Text className="text-gray-500 mt-1">Welcome back! Sign in to continue.</Text>
                         </View>
+
 
                         <View className="w-full mb-4">
                             <Text className="text-gray-600 mb-2 ml-1 font-medium">Phone</Text>
@@ -75,6 +92,7 @@ const LoginScreen = () => {
                             />
                         </View>
 
+
                         <Text className='text-red-600 text-center font-monasans-light mb-5 text-xs'>{formFeedbackMsg}</Text>
                         
 
@@ -97,6 +115,7 @@ const LoginScreen = () => {
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
+            {isLoading && <Loader />}
         </SafeAreaView>
     );
 };

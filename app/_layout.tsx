@@ -33,6 +33,7 @@ export default function RootLayout(){
         <SafeAreaView style={{height: usableHeight, backgroundColor:"#fff"}} edges={["top", "left", "right"]}>
           <StatusBar barStyle="dark-content"/>
           <Stack>
+            <Stack.Screen name='home' options={{headerShown:false}}/>
             <Stack.Screen name='getstartedscreen' options={{headerShown:false}}/>
             <Stack.Screen name='createaccountscreen' options={{headerShown:false}}/>
             <Stack.Screen name='login' options={{headerShown:false}}/>

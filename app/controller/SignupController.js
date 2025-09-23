@@ -15,10 +15,7 @@ const SignupController = async(firstname, lastname, email, phone, password, conf
     try{
         const url = 'https://50gjymfsz0.execute-api.us-east-1.amazonaws.com/dev/signup'
         const response = await axios.post(url, {firstname, lastname, email, phone, password})
-
-        // console.log("Response-code::"+response.status + "  "+ "Response-data::"+response.data)
         
-
 
         if (response.data != "Successful"){
 
@@ -30,9 +27,8 @@ const SignupController = async(firstname, lastname, email, phone, password, conf
 
     }
     catch(error){
-           console.log('Error: ' + err + " Error code::"+ err.code)
           
-          return err.code
+          return error.code
     }
 
 
