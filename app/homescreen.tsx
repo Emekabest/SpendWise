@@ -1,3 +1,4 @@
+import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { Dimensions, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import AppDetails from "./service/AppService";
@@ -32,8 +33,16 @@ const HomeScreen  = ()=>{
                 </View>
             </View>
 
-            <View className="h-[10%] w-full bg-gray-200 rounded-2xl mt-4">{/**Categories Section */}
+            <View className="h-[12%] w-full bg-gray-100 rounded-2xl mt-4 flex-row items-center justify-around">{/**Categories Section */}
+                <TouchableOpacity className="items-center">
+                    <Ionicons name="wallet" size={30} color={AppDetails.color.iconColors} />
+                    <Text className="font-monasans-regular text-sm mt-1" style={{color: AppDetails.color.iconColors}}>Budget</Text>
+                </TouchableOpacity>
 
+                <TouchableOpacity className="items-center">
+                    <Ionicons name="cash" size={30} color={AppDetails.color.iconColors} />
+                    <Text className="font-monasans-regular text-sm mt-1" style={{color: AppDetails.color.iconColors}}>Withdraw</Text>
+                </TouchableOpacity>
             </View>
 
         </SafeAreaView>
