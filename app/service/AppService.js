@@ -7,9 +7,6 @@ const AppDetails = {
 
     },
 
-    header:{
-        height:60
-    }
 
 
 }
