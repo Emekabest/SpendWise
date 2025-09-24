@@ -32,8 +32,8 @@ const HomeScreen  = ()=>{
                 </View>
             </View>
 
-            <View>{/**Categories Section */}
-                
+            <View className="h-[10%] w-full bg-gray-200 rounded-2xl mt-4">{/**Categories Section */}
+
             </View>
 
         </SafeAreaView>
