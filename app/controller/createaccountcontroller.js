@@ -1,9 +1,9 @@
 import axios from "axios";
 import TextFieldService from "../service/TextFieldService";
 
-const CreateAccountController = async(firstname, lastname, email, phone, password, confirmPassword)=>{
+const CreateAccountController = async(firstname, lastname, email, phone, pin, confirmPin)=>{
 
-    let signupFeedbackMessage = TextFieldService(["firstname", "lastname", "email", "phone", "password", "confirmPassword"], {firstname, lastname, email, phone, password, confirmPassword})
+    let signupFeedbackMessage = TextFieldService(["firstname", "lastname", "email", "phone", "pin", "confirmPin"], {firstname, lastname, email, phone, pin, confirmPin})
 
     if (signupFeedbackMessage != "Successful"){
         
@@ -14,7 +14,7 @@ const CreateAccountController = async(firstname, lastname, email, phone, passwor
 
     try{
         const url = 'https://50gjymfsz0.execute-api.us-east-1.amazonaws.com/dev/signup'
-        const response = await axios.post(url, {firstname, lastname, email, phone, password})
+        const response = await axios.post(url, {firstname, lastname, email, phone, pin})
         
 
         if (response.data != "Successful"){

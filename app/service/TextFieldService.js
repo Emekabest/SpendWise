@@ -24,17 +24,15 @@ const TextFieldService = (fieldsToValidate, form)=>{
         message: 'Phone must be 11 digits',
       },
 
-      password: {
-        regex: /^(?=.*[A-Za-z])(?=.*\d).{5,}$/,
-        message: 'Password must contain at least one letter, one digit and min of 5',
+      pin: {
+        regex: /^\d{4}$/,
+        message: 'Pin must be 4 digits',
       },
 
-
-      confirmPassword: {
-        regex: new RegExp(`${form.password}`),
-        message: 'Password does not match',
+      confirmPin: {
+        regex: new RegExp(`${form.pin}`),
+        message: 'Pin does not match',
       },
-
     };
 
       

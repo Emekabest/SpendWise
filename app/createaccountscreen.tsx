@@ -14,10 +14,10 @@ const CreateAccountScreen = () => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const [pin, setPin] = useState('');
+    const [confirmPin, setConfirmPin] = useState('');
     const router = useRouter();
-    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const [isPinVisible, setIsPinVisible] = useState(false);
     
 
     const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +31,7 @@ const CreateAccountScreen = () => {
         setIsLoading(true);
         setFormFeedbackMsg('');
     
-          const message =  await CreateAccountController(firstName, lastName, email, phone, password, confirmPassword)
+          const message =  await CreateAccountController(firstName, lastName, email, phone, pin, confirmPin)
           
           if (message?.status === 400 || message.status === 403){
                 setFormFeedbackMsg(message.message)
@@ -124,13 +124,14 @@ const CreateAccountScreen = () => {
                             <View className="relative justify-center">
                                 <TextInput
                                     className="border border-gray-300 p-3 rounded-lg w-full bg-gray-50"
-                                    placeholder="Enter your password"
-                                    value={password}
-                                    onChangeText={setPassword}
-                                    secureTextEntry={!isPasswordVisible}
+                                    placeholder="Enter your pin"
+                                    value={pin}
+                                    onChangeText={setPin}
+                                    keyboardType="numeric"
+                                    secureTextEntry={!isPinVisible}
                                 />
-                                <TouchableOpacity onPress={() => setIsPasswordVisible(!isPasswordVisible)} className="absolute right-4">
-                                    <Ionicons name={isPasswordVisible ? 'eye-off' : 'eye'} size={24} color="gray" />
+                                <TouchableOpacity onPress={() => setIsPinVisible(!isPinVisible)} className="absolute right-4">
+                                    <Ionicons name={isPinVisible ? 'eye-off' : 'eye'} size={24} color="gray" />
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -140,9 +141,10 @@ const CreateAccountScreen = () => {
                             <Text className="text-gray-600 mb-2 ml-1 font-medium">Confirm Password</Text>
                             <TextInput
                                 className="border border-gray-300 p-3 rounded-lg w-full bg-gray-50"
-                                placeholder="Confirm your password"
-                                value={confirmPassword}
-                                onChangeText={setConfirmPassword}
+                                placeholder="Confirm your pin"
+                                value={confirmPin}
+                                onChangeText={setConfirmPin}
+                                keyboardType="numeric"
                                 secureTextEntry
                             />
                         </View>
