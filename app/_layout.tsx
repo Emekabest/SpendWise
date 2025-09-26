@@ -75,6 +75,7 @@ export default function RootLayout(){
             <Stack.Screen name='getstartedscreen' options={{headerShown:false}}/>
             <Stack.Screen name='createaccountscreen' options={{headerShown:false}}/>
             <Stack.Screen name='loginscreen' options={{headerShown:false}}/>
+            <Stack.Screen name='otpscreen' options={{headerShown:false}}/>
           </Stack>
         </SafeAreaView>
   );

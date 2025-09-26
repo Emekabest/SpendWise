@@ -109,18 +109,7 @@ const CreateAccountScreen = () => {
                         </View>
 
                         <View className="w-full mb-4">
-                            <Text className="text-gray-600 mb-2 ml-1 font-medium">Phone</Text>
-                            <TextInput
-                                className="border border-gray-300 p-3 rounded-lg w-full bg-gray-50"
-                                placeholder="Enter your phone number"
-                                value={phone}
-                                onChangeText={setPhone}
-                                keyboardType="numeric"
-                            />
-                        </View>
-
-                        <View className="w-full mb-4">
-                            <Text className="text-gray-600 mb-2 ml-1 font-medium">Password</Text>
+                            <Text className="text-gray-600 mb-2 ml-1 font-medium">Pin (4 digits)</Text>
                             <View className="relative justify-center">
                                 <TextInput
                                     className="border border-gray-300 p-3 rounded-lg w-full bg-gray-50"
@@ -138,7 +127,7 @@ const CreateAccountScreen = () => {
 
 
                         <View className="w-full mb-4">
-                            <Text className="text-gray-600 mb-2 ml-1 font-medium">Confirm Password</Text>
+                            <Text className="text-gray-600 mb-2 ml-1 font-medium">Confirm Pin</Text>
                             <TextInput
                                 className="border border-gray-300 p-3 rounded-lg w-full bg-gray-50"
                                 placeholder="Confirm your pin"
