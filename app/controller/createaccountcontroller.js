@@ -1,15 +1,6 @@
 import axios from "axios";
-import TextFieldService from "../service/TextFieldService";
 
 const CreateAccountController = async(firstname, lastname, email, phone, pin, confirmPin)=>{
-
-    let signupFeedbackMessage = TextFieldService(["firstname", "lastname", "email", "phone", "pin", "confirmPin"], {firstname, lastname, email, phone, pin, confirmPin})
-
-    if (signupFeedbackMessage != "Successful"){
-        
-      return {status:400, message:signupFeedbackMessage};
-    }
-
 
 
     try{

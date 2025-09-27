@@ -1,12 +1,11 @@
 import { Ionicons } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Link, Stack, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import CreateAccountController from './controller/createaccountcontroller';
+import OtpController from "./controller/otpController";
+import UserExistenceController from "./controller/userexistenceController";
 import Loader from "./loader";
 import AppDetails from './service/AppService';
-
 
 
 const CreateAccountScreen = () => {
@@ -25,26 +24,33 @@ const CreateAccountScreen = () => {
 
 
 
-
-
     const handleCreateAccount = async()=> {
         setIsLoading(true);
         setFormFeedbackMsg('');
     
-          const message =  await CreateAccountController(firstName, lastName, email, phone, pin, confirmPin)
+        //   const message =  await CreateAccountController(firstName, lastName, email, pin, confirmPin)
+          const userExistenceResponse = await UserExistenceController(firstName.trim(), lastName.trim(), email.trim(), pin.trim(), confirmPin.trim());
           
-          if (message?.status === 400 || message.status === 403){
-                setFormFeedbackMsg(message.message)
+          if (userExistenceResponse?.status === 400 || userExistenceResponse.status === 403){
+
+                setFormFeedbackMsg(userExistenceResponse.message)
+          }
+          else if (userExistenceResponse.status === 200){
+
+                const otpResponse = await OtpController(email.trim())
+
+                if (otpResponse?.status === 400 || otpResponse.status === 403){
+
+                    setFormFeedbackMsg(otpResponse.message)
+                }
+                else if (otpResponse.status === 200){
+
+                    console.log("Otp sent successfully")
+
+                    router.push("/otpscreen");
+                }
 
           }
-          else if (message.status === 200){
-
-            await AsyncStorage.setItem("is-launched", "true")
-            await AsyncStorage.setItem("phone", phone.trim())
-
-            router.push("/loginscreen")
-          }
-          
 
 
         setIsLoading(false);
