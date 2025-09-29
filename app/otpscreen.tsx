@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Stack, useRouter } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import {
     Keyboard,
@@ -11,16 +12,29 @@ import {
     TouchableOpacity,
     View
 } from "react-native";
+import CreateAccountController from "./controller/createaccountcontroller";
+import VerifyOtpController from './controller/verifyOtpController';
+import Loader from './loader';
 import AppDetails from './service/AppService';
 
 
+
 const OtpScreen = ()=>{
+
+
     const router = useRouter();
     const [otp, setOtp] = useState(['', '', '', '']);
     const inputs = useRef<Array<TextInput | null>>([]);
     const [countdown, setCountdown] = useState(180);
     const [isTimerActive, setIsTimerActive] = useState(true);
 
+
+    const { firstName, lastName, email, pin} = useLocalSearchParams();
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [formFeedbackMsg, setFormFeedbackMsg] = useState('');
+    
+    
     
 
     useEffect(() => {
@@ -69,24 +83,58 @@ const OtpScreen = ()=>{
     };
 
     const handleKeyPress = (e: any, index: number) => {
+
+
         // Move to previous input on backspace if current is empty
         if (e.nativeEvent.key === 'Backspace' && otp[index] === '' && index > 0) {
             inputs.current[index - 1]?.focus();
         }
     };
 
-    const handleVerify = () => {
+
+
+
+
+
+    const handleVerify = async () => {
+        setIsLoading(true);
+        setFormFeedbackMsg('');
+
+
+
         const otpCode = otp.join('');
         if (otpCode.length === 4) {
-            console.log('Verifying OTP:', otpCode);
-            // Add your verification logic here
-            // On success, navigate to the next screen
-            // For now, let's just go to the login screen as an example
-            router.replace('/loginscreen');
+            const response = await VerifyOtpController(email, otpCode)
+
+            if (response.status === 200) {
+
+                const createAccountResponse =  await CreateAccountController(firstName, lastName, email, pin)
+                if (200 === createAccountResponse.status){
+
+                    setFormFeedbackMsg("Successful");
+
+
+                  await AsyncStorage.setItem("user-email", email.toString())
+
+                    
+                    router.replace('/loginscreen2');
+                }
+                else{
+
+                    setFormFeedbackMsg("An error occured while creating your account")
+                }
+            }
+             else{
+                setFormFeedbackMsg(response.message)
+             }
+
+
         } else {
-            // Show an error message
-            console.log('Please enter a valid 4-digit OTP.');
+
+            setFormFeedbackMsg('Please enter a valid 4-digit OTP.');
         }
+
+        setIsLoading(false)
     };
 
 return(
@@ -122,6 +170,7 @@ return(
                         ))}
                     </View>
 
+                    <Text style={{color:formFeedbackMsg == "Successful" ? 'green' : 'red'}} className='text-center font-monasans-light mb-5 text-xs'>{formFeedbackMsg}</Text>
 
                     <TouchableOpacity
                         activeOpacity={0.8}
@@ -148,6 +197,7 @@ return(
                 </View>
             </View>
         </KeyboardAvoidingView>
+        {isLoading && <Loader />}
     </SafeAreaView>
 )
 

@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Link, Stack, useRouter } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     KeyboardAvoidingView,
     Platform,
@@ -20,29 +20,44 @@ import AppDetails from './service/AppService';
 
 
 
-const LoginScreen = () => {
-    const [email, setEmail] = useState('');
-    const [pin, setPin] = useState('');
+const LoginScreen2 = () => {
+    // const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const router = useRouter();
 
 
     const [isLoading, setIsLoading] = useState(false);    
     const [formFeedbackMsg, setFormFeedbackMsg] = useState('');
-    const [isPinVisible, setIsPinVisible] = useState(false);
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const [userEmail, setUserEmail] = useState("");
 
 
+
+
+    useEffect(()=>{
+        const getUserEmail = async()=>{
+            const userEmail = await AsyncStorage.getItem("user-email")
+
+            
+            setUserEmail(userEmail ? userEmail : "")
+
+
+        }
+
+        getUserEmail()
+    },[])
 
 
 
     const handleLogin = async() => {
-        if (email && pin == ""){
+        if (password == ""){
             setFormFeedbackMsg('Password is required')
             return
         }
 
         setIsLoading(true);
         
-        const message = await loginController(email, pin)
+        const message = await loginController(userEmail, password)
 
 
         setFormFeedbackMsg(message?.status === 403 ? message.message : '')
@@ -53,12 +68,14 @@ const LoginScreen = () => {
           else if (message.status === 200){
 
             await AsyncStorage.setItem("is-launched", "true")
-            await AsyncStorage.setItem("email", email.trim())
-            await AsyncStorage.setItem("user-email", email.toString())
+            await AsyncStorage.setItem("email", userEmail.trim())
 
             
             router.dismissAll()   
             router.replace("/homescreen")
+          }
+          else{
+            setFormFeedbackMsg(message.message)
           }
 
 
@@ -83,33 +100,27 @@ const LoginScreen = () => {
                         </TouchableOpacity>
 
                         <View className="items-center mb-8">
-                            <Text className="text-3xl font-bold text-gray-800">Login</Text>
-                            <Text className="text-gray-500 mt-1">Sign in to continue.</Text>
+                            <Text className="text-3xl font-bold text-gray-800">Welcome</Text>
+                            <View>
+                                 <Text className="text-gray-500 mt-1">{userEmail}</Text>
+                            </View>
                         </View>
 
 
-                        <View className="w-full mb-4">
-                            <Text className="text-gray-600 mb-2 ml-1 font-medium">Email</Text>
-                            <TextInput
-                                className="border border-gray-300 p-4 rounded-lg w-full bg-gray-50"
-                                placeholder="Enter your email"
-                                value={email}
-                                onChangeText={setEmail}
-                            />
-                        </View>
 
                         <View className="w-full mb-6">
-                            <Text className="text-gray-600 mb-2 ml-1 font-medium">Pin</Text>
                             <View className="relative justify-center">
                                 <TextInput
                                     className="border border-gray-300 p-4 rounded-lg w-full bg-gray-50"
                                     placeholder="Enter your pin"
-                                    value={pin}
-                                    onChangeText={setPin}
-                                    secureTextEntry={!isPinVisible}
+                                    value={password}
+                                    onChangeText={setPassword}
+                                    secureTextEntry={!isPasswordVisible}
+                                    keyboardType="numeric"
                                 />
-                                <TouchableOpacity onPress={() => setIsPinVisible(!isPinVisible)} className="absolute right-4">
-                                    <Ionicons name={isPinVisible ? 'eye-off' : 'eye'} size={24} color="gray" />
+
+                                <TouchableOpacity onPress={() => setIsPasswordVisible(!isPasswordVisible)} className="absolute right-4">
+                                    <Ionicons name={isPasswordVisible ? 'eye-off' : 'eye'} size={24} color="gray" />
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -135,6 +146,14 @@ const LoginScreen = () => {
                                 </TouchableOpacity>
                             </Link>
                         </View>
+                            <View className="flex-row justify-center mt-3">
+                            <Text className="text-gray-500"></Text>
+                            <Link href="/loginscreen" asChild>
+                                <TouchableOpacity>
+                                    <Text style={{color:AppDetails.color.iconColors}} className="font-monasans-light">Login to another account</Text>
+                                </TouchableOpacity>
+                            </Link>
+                        </View>
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
@@ -144,4 +163,4 @@ const LoginScreen = () => {
     );
 };
 
-export default LoginScreen;
+export default LoginScreen2;

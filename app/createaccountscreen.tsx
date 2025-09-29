@@ -28,7 +28,6 @@ const CreateAccountScreen = () => {
         setIsLoading(true);
         setFormFeedbackMsg('');
     
-        //   const message =  await CreateAccountController(firstName, lastName, email, pin, confirmPin)
           const userExistenceResponse = await UserExistenceController(firstName.trim(), lastName.trim(), email.trim(), pin.trim(), confirmPin.trim());
           
           if (userExistenceResponse?.status === 400 || userExistenceResponse.status === 403){
@@ -47,7 +46,7 @@ const CreateAccountScreen = () => {
 
                     console.log("Otp sent successfully")
 
-                    router.push("/otpscreen");
+                    router.push({pathname:"/otpscreen", params:{firstName, lastName, email, pin}});
                 }
 
           }
@@ -152,6 +151,7 @@ const CreateAccountScreen = () => {
                             className=" py-4 rounded-full w-full items-center shadow-md"
                             onPress={handleCreateAccount}
                             style={{backgroundColor:AppDetails.color.iconColors}}
+
                         >
                             <Text className="text-white text-lg font-monasans-bold">Create Account</Text>
                         </TouchableOpacity>

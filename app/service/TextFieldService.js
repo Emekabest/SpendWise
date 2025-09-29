@@ -19,11 +19,6 @@ const TextFieldService = (fieldsToValidate, form)=>{
         message: 'email is not valid',
       },
 
-      phone: {
-        regex: /^\d{11}$/,
-        message: 'Phone must be 11 digits',
-      },
-
       pin: {
         regex: /^\d{4}$/,
         message: 'Pin must be 4 digits',

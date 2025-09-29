@@ -1,7 +1,8 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFonts } from "expo-font";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Dimensions,
   FlatList,
@@ -84,7 +85,8 @@ const Pagination = ({ currentIndex }: { currentIndex: number }) => {
 };
 
 const getStartedScreen = ()=>{
-    const [fontsLoaded] = useFonts(ActivateFonts); 
+    const [fontsLoaded] = useFonts(ActivateFonts);
+    const [loginScreen, setLoginScreen] = useState<any>("/loginscreen")
 
     
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -101,10 +103,31 @@ const getStartedScreen = ()=>{
 
 
     const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
+
+
+    useEffect(()=>{
+      const handleMoveToLogin = async()=>{
+        const userEmail = await AsyncStorage.getItem("user-email")
+
+          if (userEmail){
+            setLoginScreen("/loginscreen2")
+          }
+          else{
+            setLoginScreen("/loginscreen")
+          }
+      }
+
+
+
+      handleMoveToLogin()
+    },[])
+
+
+
     
 
   if (!fontsLoaded) {
-    return <View></View>; // don’t render UI until fonts are loaded
+    return <View></View>;
   }
     return(
         <View className="h-[100%] bg-white">
@@ -129,7 +152,7 @@ const getStartedScreen = ()=>{
                 keyExtractor={(item) => item.id}
               />
               <View className="absolute bottom-5 w-full">
-                <Pagination currentIndex={currentIndex} />
+                <Pagination currentIndex={currentIndex}/>
               </View>
             </View>
 
@@ -143,7 +166,7 @@ const getStartedScreen = ()=>{
                 </Link>
 
 
-                <Link href="/loginscreen" asChild>
+                <Link href={loginScreen} asChild>
                   <TouchableOpacity activeOpacity={1} className="h-16 w-[100%] rounded-full items-center justify-center" style={{backgroundColor:AppDetails.color.iconColors}}>
                           <Text className="font-monasans-regular text-xl color-white">Login</Text>
                   </TouchableOpacity>

@@ -36,7 +36,7 @@ export default function RootLayout(){
         // await AsyncStorage.clear()
 
         const isLaunched = await AsyncStorage.getItem('is-launched');
-        const isUser = await AsyncStorage.getItem("phone");
+        const isUser = await AsyncStorage.getItem("email");
 
 
         if (isLaunched === 'true' && isUser){
@@ -75,6 +75,7 @@ export default function RootLayout(){
             <Stack.Screen name='getstartedscreen' options={{headerShown:false}}/>
             <Stack.Screen name='createaccountscreen' options={{headerShown:false}}/>
             <Stack.Screen name='loginscreen' options={{headerShown:false}}/>
+            <Stack.Screen name='loginscreen2' options={{headerShown:false}}/>
             <Stack.Screen name='otpscreen' options={{headerShown:false}}/>
           </Stack>
         </SafeAreaView>
