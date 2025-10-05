@@ -7,15 +7,19 @@ import AppDetails from "./service/AppService";
 
 
 const HomeScreen  = ()=>{
-    const [userName, setUserName] = useState("User");
+    const [firstname, setFirstname] = useState("User");
     const { height } = Dimensions.get("window");
+
+    const [balance, setBalance] = useState("")
+
+
 
 
     return (
         <SafeAreaView className="flex-1 p-4" style={{height:height, backgroundColor:"#fff"}}>
             <View className="h-[10%] flex-row">
                 <View className="h-[100%] w-[50%] justify-center">
-                    <Text className="text-lg font-monasans-bold text-gray-800">Hi, {userName}</Text>
+                    <Text className="text-lg font-monasans-bold text-gray-800">Hi, {firstname}</Text>
                 </View>
                 <View></View>
             </View>
