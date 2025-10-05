@@ -1,59 +1,36 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import React from 'react';
+import React, { useState } from 'react';
 import {
-  FlatList,
   SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
 import AppDetails from './service/AppService';
 
-interface PaymentOption {
-  id: string;
-  title: string;
-  icon: React.ComponentProps<typeof Ionicons>['name'];
-}
-
-const PAYMENT_OPTIONS: PaymentOption[] = [
-  { id: 'card', title: 'Card', icon: 'card-outline' },
-  { id: 'bank_transfer', title: 'Bank Transfer', icon: 'swap-horizontal-outline' },
-  { id: 'bank', title: 'Bank', icon: 'business-outline' },
-];
-
 const AddFundScreen = () => {
   const router = useRouter();
+  const [amount, setAmount] = useState('');
+  const [error, setError] = useState('');
 
-  const handleSelectOption = (option: PaymentOption) => {
-    if (option.id === 'card') {
-      // In a real app, you would get the amount from user input
-      // and the user's email from your state management or async storage.
-      router.push({
-        pathname: '/cardpaymentscreen',
-        params: { amount: '100', email: 'josephemeka2611@email.com' },
-      });
-    } else {
-      console.log('Selected payment option:', option.title);
+  const handleProceedToPayment = () => {
+    const numericAmount = parseFloat(amount);
+    if (!amount || isNaN(numericAmount) || numericAmount <= 0) {
+      setError('Please enter a valid amount.');
+      return;
     }
-  };
+    setError('');
 
-  const renderItem = ({ item }: { item: PaymentOption }) => (
-    <TouchableOpacity
-      style={styles.optionButton}
-      onPress={() => handleSelectOption(item)}
-      activeOpacity={0.7}>
-      <Ionicons
-        name={item.icon}
-        size={24}
-        color={AppDetails.color.iconColors}
-        style={styles.icon}
-      />
-      <Text style={styles.optionText}>{item.title}</Text>
-    </TouchableOpacity>
-  );
+    // In a real app, you would get the user's email from state management or async storage.
+    router.push({
+      pathname: '/paymentscreen',
+      params: { amount, email: 'josephemeka2611@email.com' },
+    });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -63,18 +40,34 @@ const AddFundScreen = () => {
           <Ionicons name="arrow-back" size={28} color="#1A1A1A" />
         </TouchableOpacity>
         <View>
-          <Text style={styles.headerText}>Add Funds</Text>
+          <Text  style={styles.headerText}>Add Funds</Text>
         </View>
       </View>
       <View style={styles.subHeader}>
-        <Text style={styles.subHeaderText}>Choose a payment method</Text>
+        <Text style={styles.subHeaderText}>Enter the amount you want to add</Text>
       </View>
-      <FlatList
-        data={PAYMENT_OPTIONS}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        contentContainerStyle={styles.listContainer}
-      />
+      <View style={styles.contentContainer}>
+        <View style={styles.inputContainer}>
+          <Text style={styles.currencySymbol}>₦</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="0.00"
+            keyboardType="numeric"
+            value={amount}
+            onChangeText={text => {
+              setAmount(text);
+              if (error) setError('');
+            }}
+          />
+        </View>
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleProceedToPayment}
+          activeOpacity={0.8}>
+          <Text className='' style={styles.buttonText}>Proceed to Payment</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
@@ -82,7 +75,7 @@ const AddFundScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F7F8FA',
   },
   headerContainer: {
     flexDirection: 'row',
@@ -110,24 +103,48 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#666666',
   },
-  listContainer: {
-    paddingTop: 16,
+  contentContainer: {
+    flex: 1,
+    padding: 24,
   },
-  optionButton: {
-    backgroundColor: '#F7F8FA',
+  inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 20,
-    marginHorizontal: 16,
-    marginBottom: 12,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#EFEFEF',
     borderRadius: 8,
+    paddingHorizontal: 16,
   },
-  icon: {
-    marginRight: 16,
-  },
-  optionText: {
-    fontSize: 18,
+  currencySymbol: {
+    fontSize: 24,
+    fontWeight: 'bold',
     color: '#333333',
+    marginRight: 8,
+  },
+  input: {
+    flex: 1,
+    fontSize: 24,
+    paddingVertical: 16,
+    color: '#333333',
+    fontWeight: '500',
+  },
+  errorText: {
+    color: 'red',
+    marginTop: 8,
+    marginLeft: 4,
+  },
+  button: {
+    backgroundColor: AppDetails.color.iconColors,
+    padding: 16,
+    borderRadius: 30,
+    alignItems: 'center',
+    marginTop: 32,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 

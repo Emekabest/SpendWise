@@ -2,17 +2,17 @@ import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React from 'react';
 import {
-    ActivityIndicator,
-    Alert,
-    SafeAreaView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Alert,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 
-const CardPaymentScreen = () => {
+const PaymentScreen = () => {
   const router = useRouter();
   const params = useLocalSearchParams();
 
@@ -150,4 +150,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CardPaymentScreen;
+export default PaymentScreen;
