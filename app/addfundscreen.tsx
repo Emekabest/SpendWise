@@ -28,8 +28,16 @@ const AddFundScreen = () => {
   const router = useRouter();
 
   const handleSelectOption = (option: PaymentOption) => {
-    // TODO: Implement navigation or action for the selected payment option
-    console.log('Selected payment option:', option.title);
+    if (option.id === 'card') {
+      // In a real app, you would get the amount from user input
+      // and the user's email from your state management or async storage.
+      router.push({
+        pathname: '/cardpaymentscreen',
+        params: { amount: '100', email: 'josephemeka2611@email.com' },
+      });
+    } else {
+      console.log('Selected payment option:', option.title);
+    }
   };
 
   const renderItem = ({ item }: { item: PaymentOption }) => (
