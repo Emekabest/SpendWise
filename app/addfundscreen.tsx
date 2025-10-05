@@ -1,3 +1,5 @@
+import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import {
   FlatList,
@@ -8,19 +10,23 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import AppDetails from './service/AppService';
 
 interface PaymentOption {
   id: string;
   title: string;
+  icon: React.ComponentProps<typeof Ionicons>['name'];
 }
 
 const PAYMENT_OPTIONS: PaymentOption[] = [
-  { id: 'card', title: 'Card' },
-  { id: 'bank_transfer', title: 'Bank Transfer' },
-  { id: 'bank', title: 'Bank' },
+  { id: 'card', title: 'Card', icon: 'card-outline' },
+  { id: 'bank_transfer', title: 'Bank Transfer', icon: 'swap-horizontal-outline' },
+  { id: 'bank', title: 'Bank', icon: 'business-outline' },
 ];
 
 const AddFundScreen = () => {
+  const router = useRouter();
+
   const handleSelectOption = (option: PaymentOption) => {
     // TODO: Implement navigation or action for the selected payment option
     console.log('Selected payment option:', option.title);
@@ -31,6 +37,12 @@ const AddFundScreen = () => {
       style={styles.optionButton}
       onPress={() => handleSelectOption(item)}
       activeOpacity={0.7}>
+      <Ionicons
+        name={item.icon}
+        size={24}
+        color={AppDetails.color.iconColors}
+        style={styles.icon}
+      />
       <Text style={styles.optionText}>{item.title}</Text>
     </TouchableOpacity>
   );
@@ -38,8 +50,15 @@ const AddFundScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Add Funds</Text>
+      <View style={styles.headerContainer}>
+        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+          <Ionicons name="arrow-back" size={28} color="#1A1A1A" />
+        </TouchableOpacity>
+        <View>
+          <Text style={styles.headerText}>Add Funds</Text>
+        </View>
+      </View>
+      <View style={styles.subHeader}>
         <Text style={styles.subHeaderText}>Choose a payment method</Text>
       </View>
       <FlatList
@@ -55,33 +74,48 @@ const AddFundScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 24,
+    paddingBottom: 12,
     backgroundColor: '#F7F8FA',
   },
-  header: {
-    padding: 24,
-    backgroundColor: '#FFFFFF',
+  backButton: {
+    marginRight: 16,
+  },
+  subHeader: {
+    paddingHorizontal: 24,
+    paddingBottom: 16,
+    backgroundColor: '#F7F8FA',
     borderBottomWidth: 1,
     borderBottomColor: '#EFEFEF',
   },
   headerText: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#1A1A1A',
   },
   subHeaderText: {
     fontSize: 16,
     color: '#666666',
-    marginTop: 8,
   },
   listContainer: {
     paddingTop: 16,
   },
   optionButton: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F7F8FA',
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: 20,
     marginHorizontal: 16,
     marginBottom: 12,
     borderRadius: 8,
+  },
+  icon: {
+    marginRight: 16,
   },
   optionText: {
     fontSize: 18,
