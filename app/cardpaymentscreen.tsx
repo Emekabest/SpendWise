@@ -21,7 +21,7 @@ const CardPaymentScreen = () => {
 const reference = `REF-${Math.floor(Math.random() * 1000000000)}-${Date.now()}`;
 
   // IMPORTANT: Replace with your actual Paystack public key
-  const PAYSTACK_PUBLIC_KEY = 'pk_live_07d3329943d0b02f1055ce95bbdcaf8a93955718';
+  const PAYSTACK_PUBLIC_KEY = 'pk_live_099fb8dcd678b1213971335d42dc25be20e0ce1b';
 
   const handleSuccess = (transactionRef: string) => {
     console.log('Paystack success:', transactionRef);
