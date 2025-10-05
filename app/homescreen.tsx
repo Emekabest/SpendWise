@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import { Dimensions, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import AppDetails from "./service/AppService";
@@ -27,7 +28,7 @@ const HomeScreen  = ()=>{
 
                 <View className="h-full w-[48%] items-end justify-between">
                     <TouchableOpacity><Text className="text-white/80 font-monasans-light text-sm">Transaction history</Text></TouchableOpacity>
-                    <TouchableOpacity activeOpacity={1} className="bg-white py-2 px-4 rounded-full"><Text className="font-monasans-bold" style={{color:AppDetails.color.iconColors}}>Add Funds</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={()=> router.push("/addfundscreen")} activeOpacity={1} className="bg-white py-2 px-4 rounded-full"><Text className="font-monasans-bold" style={{color:AppDetails.color.iconColors}}>Add Funds</Text></TouchableOpacity>
                 </View>
             </View>
             

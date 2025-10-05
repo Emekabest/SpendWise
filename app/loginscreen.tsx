@@ -97,6 +97,7 @@ const LoginScreen = () => {
                                 onChangeText={setEmail}
                             />
                         </View>
+                        
 
                         <View className="w-full mb-6">
                             <Text className="text-gray-600 mb-2 ml-1 font-medium">Pin</Text>

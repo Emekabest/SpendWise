@@ -77,6 +77,7 @@ export default function RootLayout(){
             <Stack.Screen name='loginscreen' options={{headerShown:false}}/>
             <Stack.Screen name='loginscreen2' options={{headerShown:false}}/>
             <Stack.Screen name='otpscreen' options={{headerShown:false}}/>
+            <Stack.Screen name='addfundscreen' options={{headerShown:false}}/>
           </Stack>
         </SafeAreaView>
   );
