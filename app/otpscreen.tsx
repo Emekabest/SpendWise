@@ -114,7 +114,7 @@ const OtpScreen = ()=>{
                     setFormFeedbackMsg("Successful");
 
 
-                  await AsyncStorage.setItem("user-email", email.toString())
+                    await AsyncStorage.setItem("user-email", email.toString())
 
                     
                     router.replace('/loginscreen2');
