@@ -22,27 +22,33 @@ const HomeScreen  = ()=>{
 
 
 
-    useEffect(()=>{
-        const getHomeData = async()=>{
-            setIsLoading(true);
-
-            const email = await AsyncStorage.getItem("user-email");
-
-            const response = await HomeController(email)
-            if (response.status === 200){
-                const user = response.data;
-
-                setFirstname(user.firstname)
-                setBalance(user.balance)    
-
-            }
-            else{
-                console.log(response.message)
-            }
 
 
-             setIsLoading(false);
+
+    
+    const getHomeData = async()=>{
+        setIsLoading(true);
+
+        const email = await AsyncStorage.getItem("user-email");
+
+        const response = await HomeController(email)
+        if (response.status === 200){
+            const user = response.data;
+
+            setFirstname(user.firstname)
+            setBalance(user.balance)    
+
         }
+        else{
+            console.log(response.message)
+        }
+
+
+        setIsLoading(false);
+    }
+
+
+    useEffect(()=>{
 
         getHomeData()
     },[])
@@ -66,7 +72,7 @@ const HomeScreen  = ()=>{
                     <Text className="text-white text-2xl font-monasans-bold">₦ {balance}</Text>
                 </View>
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={getHomeData}>
                     <Ionicons name="refresh" size={28} color="white" />
                 </TouchableOpacity>
 
