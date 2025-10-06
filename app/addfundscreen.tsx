@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
@@ -17,7 +18,7 @@ const AddFundScreen = () => {
   const [amount, setAmount] = useState('');
   const [error, setError] = useState('');
 
-  const handleProceedToPayment = () => {
+  const handleProceedToPayment = async() => {
     const numericAmount = parseFloat(amount);
     if (!amount || isNaN(numericAmount) || numericAmount <= 0) {
       setError('Please enter a valid amount.');
@@ -28,13 +29,13 @@ const AddFundScreen = () => {
     // In a real app, you would get the user's email from state management or async storage.
     router.push({
       pathname: '/paymentscreen',
-      params: { amount, email: 'josephemeka2611@email.com' },
+      params: { amount, email: await AsyncStorage.getItem('user-email')},
     });
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle="default" />
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
           <Ionicons name="arrow-back" size={28} color="#1A1A1A" />

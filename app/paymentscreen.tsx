@@ -11,25 +11,46 @@ import {
   View,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
+import AddFundsController from "./controller/addfundscontroller";
+
+
 
 const PaymentScreen = () => {
   const router = useRouter();
   const params = useLocalSearchParams();
 
-  const amount = params.amount || '100'; // Default amount
+  const amount = params.amount || '0'; // Default amount
   const email = params.email || 'customer@email.com'; // Default email
 const reference = `REF-${Math.floor(Math.random() * 1000000000)}-${Date.now()}`;
 
   // IMPORTANT: Replace with your actual Paystack public key
+  
+//pk_test_49f11d97818e250a00077f276cd3a13dbeca0d1c
+//  pk_live_099fb8dcd678b1213971335d42dc25be20e0ce1b
   const PAYSTACK_PUBLIC_KEY = 'pk_live_099fb8dcd678b1213971335d42dc25be20e0ce1b';
 
-  const handleSuccess = (transactionRef: string) => {
-    console.log('Paystack success:', transactionRef);
-    Alert.alert(
-      'Payment Successful',
-      `Transaction reference: ${transactionRef}`,
+  const handleSuccess = async(transactionRef: string) => {
+
+
+    const response = await AddFundsController(email, amount)
+
+    if (response.status === 200){
+
+        Alert.alert(
+        'Payment Successful',
+        `Your account has been credited with ₦${amount}.`,
+        [{ text: 'OK', onPress: () => router.back() }]
+      );
+
+    }else{
+      Alert.alert(
+      'Payment Failed',
+      `Something went wrong try again!`,
       [{ text: 'OK', onPress: () => router.back() }]
     );
+    }
+
+  
   };
 
   const handleCancel = () => {

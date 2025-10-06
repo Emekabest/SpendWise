@@ -2,17 +2,17 @@ import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Dimensions, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import HomeController from "./controller/homecontroller";
 import AppDetails from "./service/AppService";
 
 
 
 const HomeScreen  = ()=>{
-    const [firstname, setFirstname] = useState("User");
+    const [firstname, setFirstname] = useState("...");
     const { height } = Dimensions.get("window");
 
-    const [balance, setBalance] = useState("")
+    const [balance, setBalance] = useState("...")
 
 
 
@@ -45,6 +45,8 @@ const HomeScreen  = ()=>{
 
     return (
         <SafeAreaView className="flex-1 p-4" style={{height:height, backgroundColor:"#fff"}}>
+            <StatusBar barStyle="default" />
+        
             <View className="h-[10%] flex-row">
                 <View className="h-[100%] w-[50%] justify-center">
                     <Text className="text-lg font-monasans-bold text-gray-800">Hi, {firstname}</Text>
@@ -54,7 +56,7 @@ const HomeScreen  = ()=>{
             <View className="h-[15%] w-[100%] rounded-2xl flex-row p-4 justify-between items-center" style={{backgroundColor:AppDetails.color.iconColors}}>{/**Balance and Funds Section */}
                 <View className="h-full justify-between">
                     <Text className="text-white/80 font-monasans-light text-base">Balance</Text>
-                    <Text className="text-white text-2xl font-monasans-bold">₦{balance}</Text>
+                    <Text className="text-white text-2xl font-monasans-bold">₦ {balance}</Text>
                 </View>
 
                 <TouchableOpacity>
