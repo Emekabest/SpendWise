@@ -6,7 +6,7 @@ import { Dimensions, SafeAreaView, StatusBar, Text, TouchableOpacity, View } fro
 import HomeController from "./controller/homecontroller";
 import Loader from "./loader";
 import AppDetails from "./service/AppService";
-
+import formatAmount from "./service/formatamount";
 
 
 const HomeScreen  = ()=>{
@@ -69,7 +69,7 @@ const HomeScreen  = ()=>{
             <View className="h-[15%] w-[100%] rounded-2xl flex-row p-4 justify-between items-center" style={{backgroundColor:AppDetails.color.iconColors}}>{/**Balance and Funds Section */}
                 <View className="h-full justify-between">
                     <Text className="text-white/80 font-monasans-light text-base">Balance</Text>
-                    <Text className="text-white text-2xl font-monasans-bold">₦ {balance}</Text>
+                    <Text className="text-white text-2xl font-monasans-bold">{formatAmount(balance)}</Text>
                 </View>
 
                 <TouchableOpacity onPress={getHomeData}>
@@ -85,7 +85,7 @@ const HomeScreen  = ()=>{
             
 
             <View className="h-[12%] w-full bg-gray-100 rounded-2xl mt-4 flex-row items-center justify-around">{/**Categories Section */}
-                <TouchableOpacity className="items-center">
+                <TouchableOpacity onPress={()=> router.push("/budgetscreen")} className="items-center">
                     <Ionicons name="wallet" size={30} color={AppDetails.color.iconColors} />
                     <Text className="font-monasans-regular text-sm mt-1" style={{color: AppDetails.color.iconColors}}>Budget</Text>
                 </TouchableOpacity>

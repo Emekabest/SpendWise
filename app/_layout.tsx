@@ -79,6 +79,8 @@ export default function RootLayout(){
             <Stack.Screen name='otpscreen' options={{headerShown:false}}/>
             <Stack.Screen name='addfundscreen' options={{headerShown:false}}/>
             <Stack.Screen name='paymentscreen' options={{headerShown:false}}/>
+            <Stack.Screen name='budgetscreen' options={{headerShown:false}}/>
+
           </Stack>
         </SafeAreaView>
   );
