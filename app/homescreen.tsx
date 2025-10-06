@@ -1,7 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dimensions, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
+import HomeController from "./controller/homecontroller";
 import AppDetails from "./service/AppService";
 
 
@@ -14,6 +16,32 @@ const HomeScreen  = ()=>{
 
 
 
+    useEffect(()=>{
+        const getHomeData = async()=>{
+            const email = await AsyncStorage.getItem("user-email");
+
+            const response = await HomeController(email)
+            if (response.status === 200){
+                const user = response.data;
+
+                setFirstname(user.firstname)
+                setBalance(user.balance)    
+
+            }
+            else{
+                console.log(response.message)
+            }
+
+
+
+        }
+
+        getHomeData()
+
+    },[])
+
+
+
 
     return (
         <SafeAreaView className="flex-1 p-4" style={{height:height, backgroundColor:"#fff"}}>
@@ -23,14 +51,18 @@ const HomeScreen  = ()=>{
                 </View>
                 <View></View>
             </View>
-            <View className="h-[15%] w-[100%] rounded-2xl flex-row p-4 justify-between" style={{backgroundColor:AppDetails.color.iconColors}}>{/**Balance and Funds Section */}
-                <View className="h-full w-[48%] justify-between">
+            <View className="h-[15%] w-[100%] rounded-2xl flex-row p-4 justify-between items-center" style={{backgroundColor:AppDetails.color.iconColors}}>{/**Balance and Funds Section */}
+                <View className="h-full justify-between">
                     <Text className="text-white/80 font-monasans-light text-base">Balance</Text>
-                    <Text className="text-white text-2xl font-monasans-bold">₦10,000</Text>
+                    <Text className="text-white text-2xl font-monasans-bold">₦{balance}</Text>
                 </View>
 
+                <TouchableOpacity>
+                    <Ionicons name="refresh" size={28} color="white" />
+                </TouchableOpacity>
 
-                <View className="h-full w-[48%] items-end justify-between">
+
+                <View className="h-full items-end justify-between">
                     <TouchableOpacity><Text className="text-white/80 font-monasans-light text-sm">Transaction history</Text></TouchableOpacity>
                     <TouchableOpacity onPress={()=> router.push("/addfundscreen")} activeOpacity={1} className="bg-white py-2 px-4 rounded-full"><Text className="font-monasans-bold" style={{color:AppDetails.color.iconColors}}>Add Funds</Text></TouchableOpacity>
                 </View>
