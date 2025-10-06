@@ -1,15 +1,20 @@
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFonts } from "expo-font";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Dimensions, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import HomeController from "./controller/homecontroller";
 import Loader from "./loader";
+import ActivateFonts from "./service/ActivateFonts";
 import AppDetails from "./service/AppService";
 import formatAmount from "./service/formatamount";
 
 
 const HomeScreen  = ()=>{
+
+        const [fontsLoaded] = useFonts(ActivateFonts);
+
     
     const [firstname, setFirstname] = useState("...");
     const { height } = Dimensions.get("window");
@@ -55,7 +60,9 @@ const HomeScreen  = ()=>{
 
 
 
-
+  if (!fontsLoaded) {
+    return <Loader />;
+  }
     return (
         <SafeAreaView className="flex-1 p-4" style={{height:height, backgroundColor:"#fff"}}>
             <StatusBar barStyle="default" />

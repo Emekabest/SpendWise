@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import {
   SafeAreaView,
   StatusBar,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -18,7 +17,7 @@ const AddFundScreen = () => {
   const [amount, setAmount] = useState('');
   const [error, setError] = useState('');
 
-  const handleProceedToPayment = async() => {
+  const handleProceedToPayment = async () => {
     const numericAmount = parseFloat(amount);
     if (!amount || isNaN(numericAmount) || numericAmount <= 0) {
       setError('Please enter a valid amount.');
@@ -26,32 +25,32 @@ const AddFundScreen = () => {
     }
     setError('');
 
-    // In a real app, you would get the user's email from state management or async storage.
+    const userEmail = await AsyncStorage.getItem('user-email');
     router.push({
       pathname: '/paymentscreen',
-      params: { amount, email: await AsyncStorage.getItem('user-email')},
+      params: { amount, email: userEmail },
     });
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView className="flex-1 bg-gray-50">
       <StatusBar barStyle="default" />
-      <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+      <View className="flex-row items-center p-6 pb-3 bg-gray-50">
+        <TouchableOpacity onPress={() => router.back()} className="mr-4">
           <Ionicons name="arrow-back" size={28} color="#1A1A1A" />
         </TouchableOpacity>
         <View>
-          <Text  style={styles.headerText}>Add Funds</Text>
+          <Text className="text-2xl font-monasans-bold text-gray-900">Add Funds</Text>
         </View>
       </View>
-      <View style={styles.subHeader}>
-        <Text style={styles.subHeaderText}>Enter the amount you want to add</Text>
+      <View className="px-6 pb-4 bg-gray-50 border-b border-gray-200">
+        <Text className="text-base font-monasans-light text-gray-500">Enter the amount you want to add</Text>
       </View>
-      <View style={styles.contentContainer}>
-        <View style={styles.inputContainer}>
-          <Text style={styles.currencySymbol}>₦</Text>
+      <View className="flex-1 p-6">
+        <View className="flex-row items-center bg-white border border-gray-200 rounded-lg px-4">
+          <Text className="text-2xl font-bold text-gray-800 mr-2">₦</Text>
           <TextInput
-            style={styles.input}
+            className="flex-1 text-2xl py-4 text-gray-800 font-monasans-regular"
             placeholder="0.00"
             keyboardType="numeric"
             value={amount}
@@ -61,92 +60,17 @@ const AddFundScreen = () => {
             }}
           />
         </View>
-        {error ? <Text style={styles.errorText}>{error}</Text> : null}
+        {error ? <Text className="text-red-500 mt-2 ml-1">{error}</Text> : null}
         <TouchableOpacity
-          style={styles.button}
+          style={{backgroundColor:AppDetails.color.iconColors}}
+          className=" p-4 rounded-full items-center mt-8"
           onPress={handleProceedToPayment}
           activeOpacity={0.8}>
-          <Text className='' style={styles.buttonText}>Proceed to Payment</Text>
+          <Text className='text-white text-lg font-monasans-bold'>Proceed to Payment</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F7F8FA',
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 24,
-    paddingBottom: 12,
-    backgroundColor: '#F7F8FA',
-  },
-  backButton: {
-    marginRight: 16,
-  },
-  subHeader: {
-    paddingHorizontal: 24,
-    paddingBottom: 16,
-    backgroundColor: '#F7F8FA',
-    borderBottomWidth: 1,
-    borderBottomColor: '#EFEFEF',
-  },
-  headerText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#1A1A1A',
-  },
-  subHeaderText: {
-    fontSize: 16,
-    color: '#666666',
-  },
-  contentContainer: {
-    flex: 1,
-    padding: 24,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderWidth: 1,
-    borderColor: '#EFEFEF',
-    borderRadius: 8,
-    paddingHorizontal: 16,
-  },
-  currencySymbol: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333333',
-    marginRight: 8,
-  },
-  input: {
-    flex: 1,
-    fontSize: 24,
-    paddingVertical: 16,
-    color: '#333333',
-    fontWeight: '500',
-  },
-  errorText: {
-    color: 'red',
-    marginTop: 8,
-    marginLeft: 4,
-  },
-  button: {
-    backgroundColor: AppDetails.color.iconColors,
-    padding: 16,
-    borderRadius: 30,
-    alignItems: 'center',
-    marginTop: 32,
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-});
 
 export default AddFundScreen;
