@@ -32,8 +32,7 @@ const LoginScreen = () => {
 
 
 
-
-
+    
     const handleLogin = async() => {
         if (email && pin == ""){
             setFormFeedbackMsg('Password is required')

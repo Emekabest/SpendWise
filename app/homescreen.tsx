@@ -4,20 +4,28 @@ import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Dimensions, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import HomeController from "./controller/homecontroller";
+import Loader from "./loader";
 import AppDetails from "./service/AppService";
 
 
 
 const HomeScreen  = ()=>{
+    
     const [firstname, setFirstname] = useState("...");
     const { height } = Dimensions.get("window");
 
     const [balance, setBalance] = useState("...")
 
 
+    const [isLoading, setIsLoading] = useState(false);    
+    
+
+
 
     useEffect(()=>{
         const getHomeData = async()=>{
+            setIsLoading(true);
+
             const email = await AsyncStorage.getItem("user-email");
 
             const response = await HomeController(email)
@@ -33,11 +41,10 @@ const HomeScreen  = ()=>{
             }
 
 
-
+             setIsLoading(false);
         }
 
         getHomeData()
-
     },[])
 
 
@@ -82,6 +89,7 @@ const HomeScreen  = ()=>{
                     <Text className="font-monasans-regular text-sm mt-1" style={{color: AppDetails.color.iconColors}}>Withdraw</Text>
                 </TouchableOpacity>
             </View>
+            {isLoading && <Loader />}
         </SafeAreaView>
     )
 }
