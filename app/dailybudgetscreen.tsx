@@ -49,8 +49,8 @@ const DailyBudgetScreen = () => {
 
   const handleSetBudgetPress = () => {
     const numericAmount = parseFloat(amount);
-    if (!amount || isNaN(numericAmount) || numericAmount <= 0) {
-      setError('Please enter a valid limit amount.');
+    if (!amount || isNaN(numericAmount) || numericAmount < 1000) { // check for minimum amount
+      setError('Please enter a valid amount. Minimum is ₦1,000.'); // update error message
       return;
     }
     setError('');
@@ -70,7 +70,7 @@ const DailyBudgetScreen = () => {
 
   const confirmationMessage = useMemo(() => {
     const numericAmount = parseFloat(amount) || 0;
-    return `Are you sure you want to set a budget of ₦${numericAmount.toLocaleString()} daily until ${date.toLocaleDateString()}? This cannot be changed for ${dayDifference} days.`;
+    return `Are you sure you want to set a daily budget of ₦${numericAmount.toLocaleString()} until ${date.toLocaleDateString()}? This cannot be changed for ${dayDifference} days.`;
   }, [amount, date, dayDifference]);
 
 
@@ -91,7 +91,7 @@ const DailyBudgetScreen = () => {
       <View className="flex-1 bg-white p-8">
         <Text className="text-gray-600 mb-2 ml-1 font-medium">Limit Amount</Text>
         <TextInput
-          placeholder="Limit Amount"
+          placeholder="Minimum of ₦1,000" // update placeholder
           keyboardType="numeric"
           className="border border-gray-300 p-4 rounded-lg"
           value={amount}
