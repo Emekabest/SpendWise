@@ -20,7 +20,7 @@ const FeedBackPanel: React.FC<FeedBackPanelProps> = ({ visible, message, onConfi
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={styles.modalText}>{message}</Text>
+                    <Text style={styles.modalText} className='font-monasans-regular'>{message}</Text>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity
                             style={[styles.button, styles.buttonNo]}

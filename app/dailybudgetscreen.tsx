@@ -1,8 +1,9 @@
 import { Feather } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useRouter } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Alert, Platform, SafeAreaView, StatusBar, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import FeedBackPanel from './feedbackpanel';
 import AppDetails from './service/AppService';
 
 const DailyBudgetScreen = () => {
@@ -17,6 +18,7 @@ const DailyBudgetScreen = () => {
   const [dayDifference, setDayDifference] = useState(7);
   const [amount, setAmount] = useState('');
   const [error, setError] = useState('');
+  const [isModalVisible, setModalVisible] = useState(false);
 
   const onDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -32,6 +34,8 @@ const DailyBudgetScreen = () => {
       const diffTime = futureDate.getTime() - today.getTime();
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       setDayDifference(diffDays);
+
+      
     }
   };
 
@@ -43,22 +47,31 @@ const DailyBudgetScreen = () => {
 
 
 
-  const handleSetBudget = () => {
+  const handleSetBudgetPress = () => {
     const numericAmount = parseFloat(amount);
     if (!amount || isNaN(numericAmount) || numericAmount <= 0) {
       setError('Please enter a valid limit amount.');
       return;
     }
-
-    
     setError('');
-
-
-    // TODO: Implement budget saving logic here
-    Alert.alert('Success', `Budget of ${numericAmount} set for ${date.toLocaleDateString()}.`);
-    console.log('Budget to save:', { amount: numericAmount, date });
+    setModalVisible(true);
   };
 
+  const confirmSetBudget = () => {
+    const numericAmount = parseFloat(amount);
+    // TODO: Implement budget saving logic here
+    Alert.alert('Success', `Budget of ₦${numericAmount} set until ${date.toLocaleDateString()}.`);
+    console.log('Budget to save:', { amount: numericAmount, date });
+    setModalVisible(false);
+    // Optionally, navigate back or to another screen
+    // router.back();
+  };
+
+
+  const confirmationMessage = useMemo(() => {
+    const numericAmount = parseFloat(amount) || 0;
+    return `Are you sure you want to set a budget of ₦${numericAmount.toLocaleString()} daily until ${date.toLocaleDateString()}? This cannot be changed for ${dayDifference} days.`;
+  }, [amount, date, dayDifference]);
 
 
 
@@ -113,11 +126,20 @@ const DailyBudgetScreen = () => {
         <TouchableOpacity
           style={{ backgroundColor: AppDetails.color.iconColors }}
           className="p-4 rounded-lg items-center"
-          onPress={handleSetBudget}
+          onPress={handleSetBudgetPress}
         >
           <Text className="text-white font-monasans-bold text-lg">Set Budget</Text>
         </TouchableOpacity>
       </View>
+
+      <FeedBackPanel
+        visible={isModalVisible}
+        message={confirmationMessage}
+        onConfirm={confirmSetBudget}
+        onCancel={() => {
+          setModalVisible(false);
+        }}
+      />
     </SafeAreaView>
   );
 };
