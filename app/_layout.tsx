@@ -80,6 +80,8 @@ export default function RootLayout(){
             <Stack.Screen name='addfundscreen' options={{headerShown:false}}/>
             <Stack.Screen name='paymentscreen' options={{headerShown:false}}/>
             <Stack.Screen name='budgetscreen' options={{headerShown:false}}/>
+            <Stack.Screen name='dailybudgetscreen' options={{headerShown:false}}/>
+
 
           </Stack>
         </SafeAreaView>
