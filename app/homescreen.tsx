@@ -92,12 +92,12 @@ const HomeScreen  = ()=>{
             
 
             <View className="h-[12%] w-full bg-gray-100 rounded-2xl mt-4 flex-row items-center justify-around">{/**Categories Section */}
-                <TouchableOpacity onPress={()=> router.push("/budgetscreen")} className="items-center">
+                <TouchableOpacity activeOpacity={1} onPress={()=> router.push("/budgetscreen")} className="items-center">
                     <Ionicons name="wallet" size={30} color={AppDetails.color.iconColors} />
                     <Text className="font-monasans-regular text-sm mt-1" style={{color: AppDetails.color.iconColors}}>Budget</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity className="items-center">
+                <TouchableOpacity activeOpacity={1} onPress={()=> router.push("/paymentscreen")} className="items-center">
                     <Ionicons name="cash" size={30} color={AppDetails.color.iconColors} />
                     <Text className="font-monasans-regular text-sm mt-1" style={{color: AppDetails.color.iconColors}}>Withdraw</Text>
                 </TouchableOpacity>
