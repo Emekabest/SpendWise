@@ -2,7 +2,7 @@ import { Feather } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { Alert, Platform, SafeAreaView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Platform, SafeAreaView, StatusBar, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import AppDetails from './service/AppService';
 
 const DailyBudgetScreen = () => {
@@ -54,8 +54,13 @@ const DailyBudgetScreen = () => {
   };
 
 
+
+
+  
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
+            <StatusBar barStyle="default" />
+      
       <View className="flex-row items-center px-4 py-8 bg-gray-50">
         <TouchableOpacity onPress={() => router.back()}>
           <Feather name="arrow-left" size={24} color="#333" />
