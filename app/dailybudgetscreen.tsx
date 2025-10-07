@@ -41,13 +41,19 @@ const DailyBudgetScreen = () => {
     setShowDatePicker(true);
   };
 
+
+
   const handleSetBudget = () => {
     const numericAmount = parseFloat(amount);
     if (!amount || isNaN(numericAmount) || numericAmount <= 0) {
       setError('Please enter a valid limit amount.');
       return;
     }
+
+    
     setError('');
+
+
     // TODO: Implement budget saving logic here
     Alert.alert('Success', `Budget of ${numericAmount} set for ${date.toLocaleDateString()}.`);
     console.log('Budget to save:', { amount: numericAmount, date });
