@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFonts } from "expo-font";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Dimensions, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import HomeController from "./controller/homecontroller";
@@ -75,9 +75,15 @@ const HomeScreen  = ()=>{
                 <View></View>
             </View>
             <View className="h-[15%] w-[100%] rounded-2xl flex-row p-4 justify-between items-center" style={{backgroundColor:AppDetails.color.iconColors}}>{/**Balance and Funds Section */}
-                <View className="h-full justify-between">
-                    <Text className="text-white/80 font-monasans-light text-base">Balance</Text>
-                    <Text className="text-white text-2xl font-monasans-bold">{formatAmount(balance)}</Text>
+                <View>
+                    <View>
+                        <Text className="text-white/80 font-monasans-light text-base">Access Balance</Text>
+                        <Text className="text-white text-2xl font-monasans-bold">{formatAmount(5000)}</Text>
+                    </View>
+                    <View className="mt-2">
+                        <Text className="text-white/80 font-monasans-light text-sm">Total Balance</Text>
+                        <Text className="text-white font-monasans-bold text-sm">{formatAmount(balance)}</Text>
+                    </View>
                 </View>
 
                 <TouchableOpacity onPress={getHomeData}>
@@ -86,7 +92,7 @@ const HomeScreen  = ()=>{
 
 
                 <View className="h-full items-end justify-between">
-                    <TouchableOpacity><Text className="text-white/80 font-monasans-light text-sm">Transaction history</Text></TouchableOpacity>
+                    <Link href="/transactionhistory" asChild><TouchableOpacity><Text className="text-white/80 font-monasans-light text-sm">Transaction history</Text></TouchableOpacity></Link>
                     <TouchableOpacity onPress={()=> router.push("/addfundscreen")} activeOpacity={1} className="bg-white py-2 px-4 rounded-full"><Text className="font-monasans-bold" style={{color:AppDetails.color.iconColors}}>Add Funds</Text></TouchableOpacity>
                 </View>
             </View>
