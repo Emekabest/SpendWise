@@ -6,9 +6,11 @@ import React, { useEffect, useState } from "react";
 import { Dimensions, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import HomeController from "./controller/homecontroller";
 import Loader from "./loader";
+import useSharedStore from "./repository/store";
 import ActivateFonts from "./service/ActivateFonts";
 import AppDetails from "./service/AppService";
 import formatAmount from "./service/formatamount";
+
 
 
 const HomeScreen  = ()=>{
@@ -22,10 +24,12 @@ const HomeScreen  = ()=>{
     const [balance, setBalance] = useState("...")
 
 
-    const [isLoading, setIsLoading] = useState(false);    
+    const [isLoading, setIsLoading] = useState(false);
+
     
-
-
+    const budgetStore = useSharedStore((state) => state.budget);
+    const setBudgetStore = useSharedStore((state) => state.setBudget);
+    
 
 
 
@@ -37,12 +41,17 @@ const HomeScreen  = ()=>{
         const email = await AsyncStorage.getItem("user-email");
 
         const response = await HomeController(email)
-        console.log(response.data)
         if (response.status === 200){
             const user = response.data.user;
 
             setFirstname(user.firstname)
             setBalance(user.balance)    
+
+
+            if (response.data.budget.email){
+                setBudgetStore({...response.data.budget})
+
+            }
 
         }
         else{
@@ -90,7 +99,7 @@ const HomeScreen  = ()=>{
                     <View className="mt-2">
                         <Text className="text-white/80 font-monasans-light text-sm">Total Balance</Text>
                         <Text className="text-white font-monasans-bold text-sm">{formatAmount(balance)}</Text>
-                    </View>     
+                    </View>
 
                     <TouchableOpacity onPress={()=> router.push("/addfundscreen")} activeOpacity={1} className="bg-white py-2 px-4 rounded-full"><Text className="font-monasans-bold" style={{color:AppDetails.color.iconColors}}>Add Funds</Text></TouchableOpacity>
                 </View>
