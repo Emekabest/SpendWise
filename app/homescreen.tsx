@@ -26,7 +26,12 @@ const HomeScreen  = ()=>{
 
     const [isLoading, setIsLoading] = useState(false);
 
+
+    const [budgetData, setBudgetData] = useState({limitAmount:0, accessAmount:0});
+
     
+
+    //Store Options...
     const budgetStore = useSharedStore((state) => state.budget);
     const setBudgetStore = useSharedStore((state) => state.setBudget);
     
@@ -48,10 +53,16 @@ const HomeScreen  = ()=>{
             setBalance(user.balance)    
 
 
-            if (response.data.budget.email){
-                setBudgetStore({...response.data.budget})
-
+            if (response.data.budget){
+                
+                setBudgetStore(response.data.budget)
+                setBudgetData({limitAmount:response.data.budget.limitAmount, accessAmount:response.data.budget.accessAmount})
             }
+            else{
+                setBudgetStore(null)
+                setBudgetData({limitAmount:0, accessAmount:0})
+            }
+            
 
         }
         else{
@@ -72,8 +83,9 @@ const HomeScreen  = ()=>{
 
   if (!fontsLoaded) {
     return <Loader />;
+
   }
-    return (
+  return (
         <SafeAreaView className="flex-1 p-4" style={{height:height, backgroundColor:"#fff"}}>
             <StatusBar barStyle="default" />
         
@@ -86,7 +98,7 @@ const HomeScreen  = ()=>{
             <View className="h-[15%] w-[100%] rounded-2xl flex-row p-4 justify-between items-center" style={{backgroundColor:AppDetails.color.iconColors}}>{/**Balance and Funds Section */}
                 <View className="h-full justify-between">
                     <Text className="text-white/80 font-monasans-light text-base">Access Balance</Text>
-                    <Text className="text-white text-2xl font-monasans-bold">{formatAmount(5000)}</Text>
+                    <Text className="text-white text-2xl font-monasans-bold">{formatAmount(budgetData.accessAmount)}</Text>
                 </View>
                     
 

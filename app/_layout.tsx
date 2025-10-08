@@ -69,7 +69,7 @@ export default function RootLayout(){
 
   return (
         <SafeAreaView style={{height: usableHeight, backgroundColor:"#fff"}} edges={["top", "left", "right"]}>
-          <StatusBar barStyle="dark-content"/>
+          <StatusBar barStyle="default"/>
           <Stack>
             <Stack.Screen name='homescreen' options={{headerShown:false}}/>
             <Stack.Screen name='getstartedscreen' options={{headerShown:false}}/>

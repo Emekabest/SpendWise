@@ -71,6 +71,8 @@ const DailyBudgetScreen = () => {
 
 
   const confirmSetBudget = async() => {
+    setModalVisible(false);
+
     setIsLoading(true);
 
 
@@ -96,7 +98,6 @@ const DailyBudgetScreen = () => {
 
 
 
-    setModalVisible(false);
     setIsLoading(false);
 
   };

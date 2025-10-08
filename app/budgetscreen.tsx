@@ -8,17 +8,22 @@ import AppDetails from './service/AppService';
 const BudgetScreen = () => {
   const router = useRouter();
   const screenWidth = Dimensions.get('window').width;
-  const [isBudget, setIsBudget] = useState(false);
+  const [budget, setBudget] = useState({type: "", limitAmount: 0, accessAmount: 0, alterDate: []});
+
 
   const budgetStore = useSharedStore((state) => state.budget);
 
   useEffect(() => {
-    if (budgetStore.email) {
-      setIsBudget(true);
-    } else {
-      setIsBudget(false);
+    
+    if (budgetStore){
+        setBudget(budgetStore);
+
     }
+  
+  
   }, [budgetStore]);
+
+
 
 
   return (
@@ -33,11 +38,33 @@ const BudgetScreen = () => {
         <View style={{ width: 24 }} />
       </View>
 
-      {isBudget ? (
-        <View className="flex-1 items-center justify-center bg-white">
-          <Text className="text-lg text-center color-[#333] px-8">
+      {budget.limitAmount > 0 ? (
+        <View className="flex-1 items-center pt-4 bg-white">
+          <Feather name="activity" size={50} color={AppDetails.color.iconColors} />
+          <Text className="text-lg font-monasans-bold text-center color-[#333] px-8 mt-4">
             Your current budget is still ongoing, come back when the date is due
           </Text>
+
+
+          <View className="mt-8 w-11/12 bg-gray-100 p-4 rounded-lg">
+            <View className="flex-row justify-between py-4 border-b border-gray-200">
+              <Text className="font-monasans-regular text-gray-600">Budget Type</Text>
+              <Text className="font-monasans-bold text-gray-800">{budget.type}</Text>
+            </View>
+            <View className="flex-row justify-between py-4 border-b border-gray-200">
+              <Text className="font-monasans-regular text-gray-600">Limit Amount</Text>
+              <Text className="font-monasans-bold text-gray-800">{budget.limitAmount}</Text>
+            </View>
+            <View className="flex-row justify-between py-4 border-b border-gray-200">
+              <Text className="font-monasans-regular text-gray-600">Access Balance</Text>
+              <Text className="font-monasans-bold text-gray-800">{budget.accessAmount}</Text>
+            </View>
+            <View className="flex-row justify-between py-4">
+              <Text className="font-monasans-regular text-gray-600">Alter Date</Text>
+              <Text className="font-monasans-bold text-gray-800">{new Date(budget.alterDate[0], budget.alterDate[1] - 1, budget.alterDate[2]).toDateString()}</Text>
+            </View>
+
+          </View>
         </View>
       ) : (
         <View className="flex-1 items-center bg-white pt-8">
