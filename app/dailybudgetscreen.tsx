@@ -1,10 +1,14 @@
 import { Feather } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useRouter } from 'expo-router';
 import React, { useMemo, useState } from 'react';
 import { Alert, Platform, SafeAreaView, StatusBar, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import BudgetController from "./controller/budgetcontroller";
 import FeedBackPanel from './feedbackpanel';
+import Loader from './loader';
 import AppDetails from './service/AppService';
+
 
 const DailyBudgetScreen = () => {
   const router = useRouter();
@@ -13,17 +17,22 @@ const DailyBudgetScreen = () => {
     const today = new Date();
     return new Date(today.setDate(today.getDate() + 7));
   };
-  const [date, setDate] = useState(getSevenDaysFromNow());
+
+  const [alterDate, setAlterDate] = useState(getSevenDaysFromNow());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [dayDifference, setDayDifference] = useState(7);
-  const [amount, setAmount] = useState('');
+  const [limitAmount, setLimitAmount] = useState('');
   const [error, setError] = useState('');
   const [isModalVisible, setModalVisible] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(false);    
+  
+
   const onDateChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
+    console.log(typeof(new Date()))
+    const currentDate = selectedDate || alterDate;
     setShowDatePicker(Platform.OS === 'ios');
-    setDate(currentDate);
+    setAlterDate(currentDate);
     
     if (currentDate) {
       const today = new Date();
@@ -35,7 +44,6 @@ const DailyBudgetScreen = () => {
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       setDayDifference(diffDays);
 
-      
     }
   };
 
@@ -48,37 +56,64 @@ const DailyBudgetScreen = () => {
 
 
   const handleSetBudgetPress = () => {
-    const numericAmount = parseFloat(amount);
-    if (!amount || isNaN(numericAmount) || numericAmount < 1000) { // check for minimum amount
+    const numericAmount = parseFloat(limitAmount);
+    if (!limitAmount || isNaN(numericAmount) || numericAmount < 1000) { // check for minimum amount
       setError('Please enter a valid amount. Minimum is ₦1,000.'); // update error message
       return;
     }
+    
     setError('');
     setModalVisible(true);
   };
 
-  const confirmSetBudget = () => {
-    const numericAmount = parseFloat(amount);
-    // TODO: Implement budget saving logic here
-    Alert.alert('Success', `Budget of ₦${numericAmount} set until ${date.toLocaleDateString()}.`);
-    console.log('Budget to save:', { amount: numericAmount, date });
+
+
+
+
+  const confirmSetBudget = async() => {
+    setIsLoading(true);
+
+
+    const userEmail = await AsyncStorage.getItem("user-email")
+  
+    const numericLimitAmount = Number(limitAmount);
+
+    
+    const response = await BudgetController(userEmail, "daily", numericLimitAmount, alterDate)
+    
+    console.log(response)
+
+    if (response.status === 200){
+
+        router.replace("/homescreen")
+
+        Alert.alert('Success', `Budget of ₦${numericLimitAmount} set until ${alterDate.toLocaleDateString()}.`);
+    }
+    else{
+          Alert.alert('Failed', "An error ocurred::"+response.message);
+    }
+
+
+
+
     setModalVisible(false);
-    // Optionally, navigate back or to another screen
-    // router.back();
+    setIsLoading(false);
+
   };
 
 
   const confirmationMessage = useMemo(() => {
-    const numericAmount = parseFloat(amount) || 0;
-    return `Are you sure you want to set a daily budget of ₦${numericAmount.toLocaleString()} until ${date.toLocaleDateString()}? This cannot be changed for ${dayDifference} days.`;
-  }, [amount, date, dayDifference]);
+    const numericAmount = parseFloat(limitAmount) || 0;
+    return `Are you sure you want to set a daily budget of ₦${numericAmount.toLocaleString()} until ${alterDate.toLocaleDateString()}? This cannot be changed for ${dayDifference} days.`;
+  }, [limitAmount, alterDate, dayDifference]);
 
 
 
   
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
-            <StatusBar barStyle="default" />
+      <StatusBar barStyle="default" />
+
       
       <View className="flex-row items-center px-4 py-8 bg-gray-50">
         <TouchableOpacity onPress={() => router.back()}>
@@ -91,12 +126,12 @@ const DailyBudgetScreen = () => {
       <View className="flex-1 bg-white p-8">
         <Text className="text-gray-600 mb-2 ml-1 font-medium">Limit Amount</Text>
         <TextInput
-          placeholder="Minimum of ₦1,000" // update placeholder
+          placeholder="Minimum of ₦1,000"
           keyboardType="numeric"
           className="border border-gray-300 p-4 rounded-lg"
-          value={amount}
+          value={limitAmount}
           onChangeText={(text) => {
-            setAmount(text);
+            setLimitAmount(text);
             if (error) setError('');
           }}
         />
@@ -104,17 +139,18 @@ const DailyBudgetScreen = () => {
         
         <Text className="text-gray-600 mb-2 ml-1 font-medium mt-4">Alter Date</Text>
         <TouchableOpacity onPress={showDatepicker} className="border border-gray-300 p-4 rounded-lg mb-4">
-          <Text>{date.toLocaleDateString()}</Text>
+          <Text>{alterDate.toLocaleDateString()}</Text>
         </TouchableOpacity>
 
         <Text className="text-[red] ml-1 text-sm font-monasans-light mb-4">
           Note: This budget can't be modified until after <Text className="font-monasans-bold color-[#333]">{dayDifference}</Text> days from today.
-        </Text>{/**Notice */}
+        </Text>
         
+
         {showDatePicker && (
           <DateTimePicker
             testID="dateTimePicker"
-            value={date}
+            value={alterDate}
             mode={'date'}
             is24Hour={true}
             display="default"
@@ -132,6 +168,7 @@ const DailyBudgetScreen = () => {
         </TouchableOpacity>
       </View>
 
+
       <FeedBackPanel
         visible={isModalVisible}
         message={confirmationMessage}
@@ -140,6 +177,8 @@ const DailyBudgetScreen = () => {
           setModalVisible(false);
         }}
       />
+
+      {isLoading && <Loader />}
     </SafeAreaView>
   );
 };

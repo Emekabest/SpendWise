@@ -13,7 +13,7 @@ import formatAmount from "./service/formatamount";
 
 const HomeScreen  = ()=>{
 
-        const [fontsLoaded] = useFonts(ActivateFonts);
+    const [fontsLoaded] = useFonts(ActivateFonts);
 
     
     const [firstname, setFirstname] = useState("...");
@@ -37,8 +37,9 @@ const HomeScreen  = ()=>{
         const email = await AsyncStorage.getItem("user-email");
 
         const response = await HomeController(email)
+        console.log(response.data)
         if (response.status === 200){
-            const user = response.data;
+            const user = response.data.user;
 
             setFirstname(user.firstname)
             setBalance(user.balance)    
