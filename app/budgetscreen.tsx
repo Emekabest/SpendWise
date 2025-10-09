@@ -74,7 +74,7 @@ const BudgetScreen = () => {
               <Text className="text-xl font-monasans-light text-black" style={{ color: AppDetails.color.iconColors }}>Daily</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={1} onPress={() => { }} style={{ width: screenWidth * 0.5, }} className="items-center bg-gray-100 p-12 rounded-lg my-8">
+          <TouchableOpacity activeOpacity={1} onPress={() => router.push('/weeklybudgetscreen')} style={{ width: screenWidth * 0.5, }} className="items-center bg-gray-100 p-12 rounded-lg my-8">
             <View className="flex-row items-center">
               <Feather name="bar-chart-2" size={24} color={AppDetails.color.iconColors} className="mr-2" />
               <Text className="text-xl font-monasans-light text-black" style={{ color: AppDetails.color.iconColors }}>Weekly</Text>
