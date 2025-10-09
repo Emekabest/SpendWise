@@ -124,7 +124,7 @@ const HomeScreen  = ()=>{
                     <Text className="font-monasans-regular text-sm mt-1" style={{color: AppDetails.color.iconColors}}>Budget</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity activeOpacity={1} onPress={()=> router.push("/paymentscreen")} className="items-center">
+                <TouchableOpacity activeOpacity={1} onPress={()=> router.push("/withdrawfundsscreen")} className="items-center">
                     <Ionicons name="cash" size={30} color={AppDetails.color.iconColors} />
                     <Text className="font-monasans-regular text-sm mt-1" style={{color: AppDetails.color.iconColors}}>Withdraw</Text>
                 </TouchableOpacity>
