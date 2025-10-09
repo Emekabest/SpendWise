@@ -29,21 +29,28 @@ const WeeklyBudgetScreen = () => {
   
 
   const onDateChange = (event, selectedDate) => {
-    console.log(typeof(new Date()))
-    const currentDate = selectedDate || alterDate;
     setShowDatePicker(Platform.OS === 'ios');
-    setAlterDate(currentDate);
-    
-    if (currentDate) {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      const futureDate = new Date(currentDate);
-      futureDate.setHours(0, 0, 0, 0);
-      
-      const diffTime = futureDate.getTime() - today.getTime();
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      setDayDifference(diffDays);
 
+    if (event.type === 'set' && selectedDate) {
+        const minDate = getSevenDaysFromNow();
+        minDate.setHours(0, 0, 0, 0);
+
+        const chosenDate = new Date(selectedDate);
+        chosenDate.setHours(0, 0, 0, 0);
+
+        const diffTime = chosenDate.getTime() - minDate.getTime();
+        const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+        const remainder = diffDays % 7;
+        
+        let newDate = new Date(chosenDate);
+        if (remainder !== 0) {
+            const daysToAdd = 7 - remainder;
+            newDate.setDate(newDate.getDate() + daysToAdd);
+        }
+        setAlterDate(newDate);
+        const finalDiffDays = Math.ceil((newDate.getTime() - new Date().setHours(0,0,0,0)) / (1000 * 60 * 60 * 24));
+        setDayDifference(finalDiffDays);
     }
   };
 
