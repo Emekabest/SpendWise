@@ -23,14 +23,13 @@ const PaymentScreen = () => {
   const email = params.email || 'customer@email.com'; // Default email
 const reference = `REF-${Math.floor(Math.random() * 1000000000)}-${Date.now()}`;
 
-  // IMPORTANT: Replace with your actual Paystack public key
+// IMPORTANT: Replace with your actual Paystack public key
   
 //pk_test_49f11d97818e250a00077f276cd3a13dbeca0d1c
 //  pk_live_099fb8dcd678b1213971335d42dc25be20e0ce1b
   const PAYSTACK_PUBLIC_KEY = 'pk_test_49f11d97818e250a00077f276cd3a13dbeca0d1c';
 
   const handleSuccess = async(transactionRef: string) => {
-
 
     const response = await AddFundsController(email, amount)
 
@@ -73,7 +72,9 @@ const reference = `REF-${Math.floor(Math.random() * 1000000000)}-${Date.now()}`;
           break;
       }
     } catch (error) {
+    
       console.error('Error parsing WebView message:', error);
+
     }
   };
 
