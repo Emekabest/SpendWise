@@ -184,4 +184,7 @@ const WeeklyBudgetScreen = () => {
   );
 };
 
+    
+
+
 export default WeeklyBudgetScreen;
