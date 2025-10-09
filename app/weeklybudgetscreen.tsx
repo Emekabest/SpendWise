@@ -1,9 +1,9 @@
 import { Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import { useRouter } from 'expo-router';
 import React, { useMemo, useState } from 'react';
-import { Alert, Platform, SafeAreaView, StatusBar, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Modal, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Calendar, DateData } from 'react-native-calendars';
 import BudgetController from "./controller/budgetcontroller";
 import FeedBackPanel from './feedbackpanel';
 import Loader from './loader';
@@ -28,33 +28,44 @@ const WeeklyBudgetScreen = () => {
   const [isLoading, setIsLoading] = useState(false);    
   
 
-  const onDateChange = (event, selectedDate) => {
-    setShowDatePicker(Platform.OS === 'ios');
+  const onDateChange = (day: DateData) => {
+    const selectedDate = new Date(day.timestamp);
+    // The calendar component already prevents selection of disabled dates.
+    // We just need to update the state.
+    setAlterDate(selectedDate);
 
-    if (event.type === 'set' && selectedDate) {
-        const minDate = getSevenDaysFromNow();
-        minDate.setHours(0, 0, 0, 0);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const futureDate = new Date(selectedDate);
+    futureDate.setHours(0, 0, 0, 0);
 
-        const chosenDate = new Date(selectedDate);
-        chosenDate.setHours(0, 0, 0, 0);
+    const diffTime = futureDate.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    setDayDifference(diffDays);
 
-        const diffTime = chosenDate.getTime() - minDate.getTime();
-        const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
-
-        const remainder = diffDays % 7;
-        
-        let newDate = new Date(chosenDate);
-        if (remainder !== 0) {
-            const daysToAdd = 7 - remainder;
-            newDate.setDate(newDate.getDate() + daysToAdd);
-        }
-        setAlterDate(newDate);
-        const finalDiffDays = Math.ceil((newDate.getTime() - new Date().setHours(0,0,0,0)) / (1000 * 60 * 60 * 24));
-        setDayDifference(finalDiffDays);
-    }
+    setShowDatePicker(false); // Close the calendar modal
   };
 
+  const getMarkedDates = () => {
+    const marked: { [key: string]: any } = {};
+    const minSelectableDate = getSevenDaysFromNow();
+    minSelectableDate.setHours(0, 0, 0, 0);
 
+    const endDate = new Date();
+    endDate.setFullYear(endDate.getFullYear() + 1); // Mark for the next year
+
+    // Enable dates that are 7-day multiples from the minimum selectable date
+    for (let d = new Date(minSelectableDate); d <= endDate; d.setDate(d.getDate() + 7)) {
+        const dateString = d.toISOString().split('T')[0];
+        marked[dateString] = { disabled: false, disableTouchEvent: false };
+    }
+
+    // Mark the currently selected date
+    const selectedDateString = alterDate.toISOString().split('T')[0];
+    marked[selectedDateString] = { ...marked[selectedDateString], selected: true, selectedColor: AppDetails.color.iconColors };
+
+    return marked;
+  };
 
   const showDatepicker = () => {
     setShowDatePicker(true);
@@ -155,17 +166,35 @@ const WeeklyBudgetScreen = () => {
         </Text>
         
 
-        {showDatePicker && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={alterDate}
-            mode={'date'}
-            is24Hour={true}
-            display="default"
-            onChange={onDateChange}
-            minimumDate={getSevenDaysFromNow()}
-          />
-        )}
+        <Modal
+            transparent={true}
+            animationType="fade"
+            visible={showDatePicker}
+            onRequestClose={() => setShowDatePicker(false)}
+        >
+            <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPressOut={() => setShowDatePicker(false)}>
+                <View style={styles.modalContent}>
+                    <Calendar
+                        onDayPress={onDateChange}
+                        minDate={new Date().toISOString().split('T')[0]}
+                        markedDates={getMarkedDates()}
+                        markingType={'custom'}
+                        theme={{
+                            arrowColor: AppDetails.color.iconColors,
+                            todayTextColor: AppDetails.color.iconColors,
+                            'stylesheet.calendar.header': {
+                                week: {
+                                    marginTop: 5,
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between'
+                                }
+                            }
+                        }}
+                    />
+                </View>
+            </TouchableOpacity>
+        </Modal>
+
 
         <TouchableOpacity
           style={{ backgroundColor: AppDetails.color.iconColors }}
@@ -191,7 +220,27 @@ const WeeklyBudgetScreen = () => {
   );
 };
 
-    
-
+const styles = StyleSheet.create({
+    modalOverlay: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContent: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 10,
+        width: '90%',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+});
 
 export default WeeklyBudgetScreen;
