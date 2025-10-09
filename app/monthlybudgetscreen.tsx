@@ -42,7 +42,7 @@ const MonthlyBudgetScreen = () => {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     setDayDifference(diffDays);
 
-    setShowDatePicker(false); // Close the calendar modal
+    setShowDatePicker(false);
   };
 
   const getMarkedDates = () => {
@@ -77,6 +77,7 @@ const MonthlyBudgetScreen = () => {
 
   const showDatepicker = () => {
     setShowDatePicker(true);
+    
   };
 
 

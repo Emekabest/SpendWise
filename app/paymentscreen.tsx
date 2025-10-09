@@ -27,7 +27,7 @@ const reference = `REF-${Math.floor(Math.random() * 1000000000)}-${Date.now()}`;
   
 //pk_test_49f11d97818e250a00077f276cd3a13dbeca0d1c
 //  pk_live_099fb8dcd678b1213971335d42dc25be20e0ce1b
-  const PAYSTACK_PUBLIC_KEY = 'pk_live_099fb8dcd678b1213971335d42dc25be20e0ce1b';
+  const PAYSTACK_PUBLIC_KEY = 'pk_test_49f11d97818e250a00077f276cd3a13dbeca0d1c';
 
   const handleSuccess = async(transactionRef: string) => {
 
@@ -39,7 +39,7 @@ const reference = `REF-${Math.floor(Math.random() * 1000000000)}-${Date.now()}`;
         Alert.alert(
         'Payment Successful',
         `Your account has been credited with ₦${amount}.`,
-        [{ text: 'OK', onPress: () => router.back() }]
+        [{ text: 'OK', onPress: () => router.replace("/homescreen") }]
       );
 
     }else{
@@ -54,8 +54,9 @@ const reference = `REF-${Math.floor(Math.random() * 1000000000)}-${Date.now()}`;
   };
 
   const handleCancel = () => {
-    console.log('Paystack payment cancelled by user.');
+
     router.back();
+
   };
 
   const handleWebViewMessage = (event: any) => {
