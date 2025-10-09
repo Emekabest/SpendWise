@@ -48,17 +48,23 @@ const WeeklyBudgetScreen = () => {
 
   const getMarkedDates = () => {
     const marked: { [key: string]: any } = {};
-    const minSelectableDate = getSevenDaysFromNow();
-    minSelectableDate.setHours(0, 0, 0, 0);
-
+    const startDate = new Date();
     const endDate = new Date();
     endDate.setFullYear(endDate.getFullYear() + 1); // Mark for the next year
 
-    // Enable dates that are 7-day multiples from the minimum selectable date
-    for (let d = new Date(minSelectableDate); d <= endDate; d.setDate(d.getDate() + 7)) {
+    // First, disable all dates in the range
+    for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+        const dateString = d.toISOString().split('T')[0];
+        marked[dateString] = { disabled: true, disableTouchEvent: true };
+    }
+
+    // Then, enable only the dates that fall on 7-day intervals
+    const firstSelectableDate = getSevenDaysFromNow();
+    for (let d = new Date(firstSelectableDate); d <= endDate; d.setDate(d.getDate() + 7)) {
         const dateString = d.toISOString().split('T')[0];
         marked[dateString] = { disabled: false, disableTouchEvent: false };
     }
+
 
     // Mark the currently selected date
     const selectedDateString = alterDate.toISOString().split('T')[0];
@@ -117,7 +123,6 @@ const WeeklyBudgetScreen = () => {
 
 
     setIsLoading(false);
-
   };
 
 
