@@ -16,12 +16,13 @@ const WithDrawFundsScreen = ()=>{
   const router = useRouter();
   const [accountNumber, setAccountNumber] = useState('');
   const [bankName, setBankName] = useState('');
+  const [accountName, setAccountName] = useState('');
   const [amount, setAmount] = useState('');
   const [error, setError] = useState('');
 
   const handleWithdraw = () => {
     // Basic validation
-    if (!accountNumber || !bankName || !amount) {
+    if (!accountNumber || !bankName || !accountName || !amount) {
       setError('All fields are required.');
       return;
     }
@@ -32,7 +33,7 @@ const WithDrawFundsScreen = ()=>{
     }
     setError('');
     // Proceed with withdrawal logic here
-    console.log({ accountNumber, bankName, amount });
+    console.log({ accountNumber, bankName, accountName, amount });
   };
 
   return (
@@ -67,6 +68,15 @@ const WithDrawFundsScreen = ()=>{
           onChangeText={setBankName}
         />
 
+        <Text className="text-gray-600 mb-2 ml-1 font-medium">Account Name</Text>
+        <TextInput
+          className="border border-gray-300 p-4 rounded-lg w-full bg-white mb-4"
+          placeholder="Enter your account name"
+          value={accountName}
+          onChangeText={setAccountName}
+        />
+
+
         <Text className="text-gray-600 mb-2 ml-1 font-medium">Amount</Text>
         <TextInput
           className="border border-gray-300 p-4 rounded-lg w-full bg-white"
@@ -85,6 +95,10 @@ const WithDrawFundsScreen = ()=>{
           activeOpacity={0.8}>
           <Text className='text-white text-lg font-monasans-bold'>Withdraw</Text>
         </TouchableOpacity>
+
+        <Text className="text-red-600 text-xs text-center mt-4 px-4 font-monasans-regular">
+          Please double-check your account details before proceeding. Funds transferred to a wrong account due to incorrect details may not be recoverable.
+        </Text>
       </View>
     </SafeAreaView>
   );
