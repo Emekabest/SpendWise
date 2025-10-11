@@ -98,6 +98,11 @@ const ProfileScreen = ()=>{
                     <Ionicons name="log-out-outline" size={24} color="#EF4444" />
                     <Text className="text-lg font-monasans-bold text-red-500 ml-2">Logout</Text>
                 </TouchableOpacity>
+
+                {/* Sponsor */}
+                <View className="items-center mt-12">
+                    <Text className="text-sm font-monasans-regular text-gray-400">Joetivity Innovations</Text>
+                </View>
             </View>
         </SafeAreaView>
     )
