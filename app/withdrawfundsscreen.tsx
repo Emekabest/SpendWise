@@ -1,40 +1,107 @@
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import {
-    SafeAreaView,
-    StatusBar,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
-} from 'react-native';
+import { Alert, SafeAreaView, StatusBar, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import WithdrawController from "./controller/withdrawcontroller";
+import Loader from './loader';
+import useSharedStore from "./repository/store";
 import AppDetails from './service/AppService';
 
-
 const WithDrawFundsScreen = ()=>{
+  
   const router = useRouter();
+
   const [accountNumber, setAccountNumber] = useState('');
   const [bankName, setBankName] = useState('');
   const [accountName, setAccountName] = useState('');
   const [amount, setAmount] = useState('');
   const [error, setError] = useState('');
 
-  const handleWithdraw = () => {
-    // Basic validation
-    if (!accountNumber || !bankName || !accountName || !amount) {
-      setError('All fields are required.');
-      return;
-    }
-    const numericAmount = parseFloat(amount);
-    if (isNaN(numericAmount) || numericAmount <= 0) {
-      setError('Please enter a valid amount.');
-      return;
-    }
-    setError('');
-    // Proceed with withdrawal logic here
-    console.log({ accountNumber, bankName, accountName, amount });
+  const [isLoading, setIsLoading] = useState(false);
+  
+
+
+  
+
+    //Store Options...
+    const budgetStore = useSharedStore((state) => state.budget);
+    const totalBalanceStore = useSharedStore((state) => state.totalBalance);
+
+
+    const handleWithdraw = async() => {
+
+      // Basic validation
+      if (!accountNumber || !bankName || !accountName || !amount){
+
+        setError('All fields are required.');
+
+        return;
+      }
+
+
+      const withdrawAmount = parseFloat(amount);
+
+
+      if (isNaN(withdrawAmount) || withdrawAmount <= 0){
+
+        setError('Please enter a valid amount.');
+        return;
+      }
+
+     setError('');
+
+
+      if (!budgetStore){
+
+
+        Alert.alert("Withdraw Feedback", "You don't have a budget, Please create a budget first.")
+
+
+      }else if (withdrawAmount >= budgetStore.accessAmount){
+
+        Alert.alert("Withdraw Feedback", "Your amount has exceed your budget.")
+
+      }
+      else if (withdrawAmount >= totalBalanceStore){
+
+
+        console.log("Your amount has exceed your total balance.");
+      }
+      else{
+        setIsLoading(true);
+
+
+        const userEmail = await AsyncStorage.getItem('user-email');
+
+        const response = await WithdrawController(userEmail, accountNumber, accountName, bankName , withdrawAmount, false);
+
+        if (response.status === 200){
+
+
+            Alert.alert(
+            'Withdraw Successful',
+            `Your account has been debited with ₦${amount}.
+            Please check you bank account after few minutes for confirmation.`,
+            [{ text: 'OK', onPress: () => router.replace("/homescreen")}]
+          );
+        }
+        else{
+
+          
+          Alert.alert("Withdraw Feedback", "Something went wrong please try again!")
+
+
+        }
+
+        setIsLoading(false);
+
+      }
+    
+
   };
+
+
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
@@ -100,6 +167,7 @@ const WithDrawFundsScreen = ()=>{
           Please double-check your account details before proceeding. Funds transferred to a wrong account due to incorrect details may not be recoverable.
         </Text>
       </View>
+      {isLoading && <Loader />}
     </SafeAreaView>
   );
 }

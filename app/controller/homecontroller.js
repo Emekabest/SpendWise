@@ -10,7 +10,7 @@ const HomeController = async(email)=>{
             const url = `https://50gjymfsz0.execute-api.us-east-1.amazonaws.com/dev/home?email=${email}`
             const response = await axios.get(url)
 
-            console.log(response.data)
+            // console.log(response.data)
             
             if (response.data.user.firstname != undefined){
 

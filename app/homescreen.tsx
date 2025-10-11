@@ -21,23 +21,21 @@ const HomeScreen  = ()=>{
     const [firstname, setFirstname] = useState("...");
     const { height } = Dimensions.get("window");
 
-    const [balance, setBalance] = useState("...")
 
+    const [balance, setBalance] = useState("...");
 
     const [isLoading, setIsLoading] = useState(false);
 
-
     const [budgetData, setBudgetData] = useState({limitAmount:0, accessAmount:0});
-
     
+
 
     //Store Options...
     const budgetStore = useSharedStore((state) => state.budget);
     const setBudgetStore = useSharedStore((state) => state.setBudget);
     
 
-
-
+    const setTotalBalanceStore = useSharedStore((state) => state.setTotalBalance);
 
     
     const getHomeData = async()=>{
@@ -50,7 +48,10 @@ const HomeScreen  = ()=>{
             const user = response.data.user;
 
             setFirstname(user.firstname)
-            setBalance(user.balance)    
+            setBalance(user.balance)
+
+
+            setTotalBalanceStore(user.balance)
 
 
             if (response.data.budget){
@@ -67,11 +68,13 @@ const HomeScreen  = ()=>{
         }
         else{
             console.log(response.message)
+
         }
 
 
         setIsLoading(false);
     }
+
 
 
     useEffect(()=>{

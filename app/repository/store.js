@@ -6,7 +6,12 @@ const store = create((set) => ({
     setFontsLoaded: (state)=> set({fontsLoaded: state}),
 
     budget:{},
-    setBudget:(state)=> set({budget: state})
+    setBudget:(state)=> set({budget: state}),
+    
+
+    totalBalance:0,
+    setTotalBalance:(state)=> set({totalBalance: state}),
+
 
 }));
 
