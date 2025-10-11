@@ -100,7 +100,10 @@ const ProfileScreen = ()=>{
                 </TouchableOpacity>
 
                 {/* Sponsor */}
-                <View className="items-center mt-12">
+                <View className="flex-row items-center justify-center mt-12">
+                    <View className="w-5 h-5 rounded-full border border-gray-400 justify-center items-center mr-2">
+                        <Text className="text-xs font-monasans-bold text-gray-400">J</Text>
+                    </View>
                     <Text className="text-sm font-monasans-regular text-gray-400">Joetivity Innovations</Text>
                 </View>
             </View>
