@@ -71,7 +71,7 @@ const ProfileScreen = ()=>{
                     profileOptions.push({
                         title: "Admin Section",
                         icon: "person-circle-outline",
-                        action:()=>{}
+                        action:()=>{router.push("/adminsectionscreen")}
                     })
 
                     return;
