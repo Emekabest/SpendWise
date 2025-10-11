@@ -2,7 +2,7 @@ import 'react-native-reanimated';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFonts } from 'expo-font';
-import { router, SplashScreen, Stack } from 'expo-router';
+import { router, SplashScreen, Stack, usePathname } from 'expo-router';
 import { useCallback, useEffect } from 'react';
 import { StatusBar, View } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -17,6 +17,12 @@ SplashScreen.preventAutoHideAsync();
 
 
 export default function RootLayout(){
+
+  const pathname = usePathname();
+
+  // Define the screens where the navigation bar should be visible
+  const navBarScreens = ['/homescreen', '/budgetscreen', '/profilescreen'];
+  const showNavBar = navBarScreens.includes(pathname);
 
   const [fontsLoaded, fontError] = useFonts(ActivateFonts);
 
@@ -93,7 +99,7 @@ export default function RootLayout(){
               <Stack.Screen name="profilescreen" options={{headerShown:false}}/>"
             </Stack>
           </SafeAreaView>
-          <NavigationBar />
+          {showNavBar && <NavigationBar />}
         </View>
   );
 }
