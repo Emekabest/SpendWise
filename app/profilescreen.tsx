@@ -85,7 +85,7 @@ const ProfileScreen = ()=>{
                 {/* Profile Options */}
                 <View className="mb-10">
                     {profileOptions.map((item, index) => (
-                        <TouchableOpacity key={index} onPress={item.action} activeOpacity={0.7} className="flex-row items-center py-6 border-b border-gray-100">
+                        <TouchableOpacity key={index} onPress={item.action} activeOpacity={0.7} className="flex-row items-center py-6  border-b border-gray-100">
                             <Ionicons name={item.icon as any} size={26} color={AppDetails.color.iconColors} />
                             <Text className="text-lg font-monasans-medium text-gray-700 ml-5 flex-1">{item.title}</Text>
                             <Ionicons name="chevron-forward-outline" size={22} color="#A0A0A0" />

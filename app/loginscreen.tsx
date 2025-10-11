@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigationState } from '@react-navigation/native';
 import { Link, Stack, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
@@ -23,7 +24,9 @@ import AppDetails from './service/AppService';
 const LoginScreen = () => {
     const [email, setEmail] = useState('');
     const [pin, setPin] = useState('');
+
     const router = useRouter();
+    const routesLength = useNavigationState((state) => state.routes.length);
 
 
     const [isLoading, setIsLoading] = useState(false);    
@@ -31,6 +34,17 @@ const LoginScreen = () => {
     const [isPinVisible, setIsPinVisible] = useState(false);
 
 
+    const handleGoBack = () => {
+
+        if (routesLength > 1) {
+
+            router.back();
+
+        }
+       
+
+
+    };
 
     
     const handleLogin = async() => {
@@ -77,7 +91,7 @@ const LoginScreen = () => {
                 <Stack.Screen options={{ headerShown: false }} />
                 <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }} keyboardShouldPersistTaps="handled">
                     <View className="p-6">
-                        <TouchableOpacity onPress={() => router.back()} className="absolute top-4 left-4 z-10">
+                        <TouchableOpacity onPress={handleGoBack} className="absolute top-4 left-4 z-10">
                             <Ionicons name="arrow-back" size={28} color="black" />
                         </TouchableOpacity>
 
