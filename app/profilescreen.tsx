@@ -10,6 +10,7 @@ import AppDetails from './service/AppService';
 
 const ProfileScreen = ()=>{
     const router = useRouter();
+    const [admins, setAdmins] = useState(["josephemekabest2611@gmail.com"])
     const [user, setUser] = useState({ firstname: '', lastname: '', email: '' });
     const [isLoading, setIsLoading] = useState(true);
 
@@ -59,6 +60,31 @@ const ProfileScreen = ()=>{
         { title: 'Help & Support', icon: 'help-circle-outline', action: () => {} },
         { title: 'About SpendWise', icon: 'information-circle-outline', action: () => {} },
     ];
+
+
+    useEffect(()=>{
+        const editProfileOptions = async()=>{
+            const userEmail = await AsyncStorage.getItem("user-email")
+
+            admins.forEach((admin)=>{
+                if (admin == userEmail){
+                    profileOptions.push({
+                        title: "Admin Section",
+                        icon: "person-circle-outline",
+                        action:()=>{}
+                    })
+
+                    return;
+                }
+            })
+
+
+
+        }
+
+        editProfileOptions()
+    },[])
+
 
     if (isLoading) {
         return <Loader />;
