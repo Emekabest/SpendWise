@@ -78,7 +78,6 @@ const WithDrawFundsScreen = ()=>{
 
         if (response.status === 200){
 
-
             Alert.alert(
             'Withdraw Successful',
             `Your account has been debited with ₦${amount}.
@@ -87,10 +86,8 @@ const WithDrawFundsScreen = ()=>{
           );
         }
         else{
-
-          
+        
           Alert.alert("Withdraw Feedback", "Something went wrong please try again!")
-
 
         }
 
