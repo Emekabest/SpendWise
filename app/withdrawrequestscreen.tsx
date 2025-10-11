@@ -1,15 +1,28 @@
 import { Ionicons } from '@expo/vector-icons';
+import * as Clipboard from 'expo-clipboard';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { FlatList, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, FlatList, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import AppDetails from './service/AppService';
 import formatAmount from './service/formatamount';
 
 
 const WithdrawRequestscreen = ()=>{
     const router = useRouter();
-    const [withdrawRequests, setWithdrawRequests] = useState([{id:"1", bankName:"", accountName:"", accountNumber:"", amount:0, status:false}]);
+    const [withdrawRequests, setWithdrawRequests] = useState([{
+                    id: '0',
+                    bankName: "Joetivity",
+                    accountName: "John Doe",
+                    accountNumber: "1234567890",
+                    amount: 3000,
+                    status: 'pending'
+                },]);
 
+    const copyToClipboard = async (text: string) => {
+        await Clipboard.setStringAsync(text);
+        Alert.alert("Copied", "Account number copied to clipboard.");
+    };
+    
     useEffect(()=>{
         const getWithdrawRequests = async()=>{
             // In a real app, you would fetch this from your backend API
@@ -20,7 +33,7 @@ const WithdrawRequestscreen = ()=>{
                     accountName: "John Doe",
                     accountNumber: "1234567890",
                     amount: 3000,
-                    status: false
+                    status: 'pending'
                 },
                 {
                     id: '2',
@@ -28,7 +41,7 @@ const WithdrawRequestscreen = ()=>{
                     accountName: "Jane Smith",
                     accountNumber: "0987654321",
                     amount: 5000,
-                    status: false
+                    status: 'pending'
                 },
                 {
                     id: '3',
@@ -36,7 +49,7 @@ const WithdrawRequestscreen = ()=>{
                     accountName: "Peter Jones",
                     accountNumber: "5556667771",
                     amount: 9000,
-                    status: false
+                    status: 'pending'
                 },
             ]);
         }
@@ -64,14 +77,17 @@ const WithdrawRequestscreen = ()=>{
                             <View className="flex-1">
                                 <Text className="text-lg font-monasans-bold text-gray-800">{item.accountName}</Text>
                                 <Text className="text-sm font-monasans-regular text-gray-500">{item.bankName}</Text>
-                                <Text className="text-sm font-monasans-regular text-gray-500 mt-1">{item.accountNumber}</Text>
+                                <View className="flex-row items-center mt-1">
+                                    <Text className="text-sm font-monasans-regular text-gray-500">{item.accountNumber}</Text>
+                                    <TouchableOpacity onPress={() => copyToClipboard(item.accountNumber)} className="ml-2 p-1">
+                                        <Ionicons name="clipboard-outline" size={18} color={AppDetails.color.iconColors} />
+                                    </TouchableOpacity>
+                                </View>
                             </View>
                             <Text className="text-xl font-monasans-bold" style={{color: AppDetails.color.iconColors}}>{formatAmount(item.amount)}</Text>
                         </View>
                         <View className="flex-row justify-end mt-4 pt-4 border-t border-gray-100">
-                            <TouchableOpacity activeOpacity={0.7} className="py-2 px-5 rounded-full bg-red-100 mr-2">
-                                <Text className="font-monasans-bold text-red-600">Decline</Text>
-                            </TouchableOpacity>
+                          
                             <TouchableOpacity activeOpacity={0.7} className="py-2 px-5 rounded-full bg-green-100">
                                 <Text className="font-monasans-bold text-green-600">Approve</Text>
                             </TouchableOpacity>
