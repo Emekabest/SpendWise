@@ -58,12 +58,12 @@ const WithDrawFundsScreen = ()=>{
         Alert.alert("Withdraw Feedback", "You don't have a budget, Please create a budget first.")
 
 
-      }else if (withdrawAmount >= budgetStore.accessAmount){
+      }else if (withdrawAmount > budgetStore.accessAmount){
 
         Alert.alert("Withdraw Feedback", "Your amount has exceed your budget.")
 
       }
-      else if (withdrawAmount >= totalBalanceStore){
+      else if (withdrawAmount > totalBalanceStore){
 
 
         console.log("Your amount has exceed your total balance.");

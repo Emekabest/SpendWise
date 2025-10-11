@@ -3,7 +3,8 @@ import * as Clipboard from 'expo-clipboard';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { Alert, FlatList, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
-import WithdrawRequestContoller from "./controller/withdrawrequestscontroller";
+import WithdrawRequestContoller from "./controller/getwithdrawrequestscontroller";
+import UpdateWithdrawController from "./controller/updatewithdrawcontroller";
 import FeedBackPanel from './feedbackpanel';
 import Loader from './loader';
 import AppDetails from './service/AppService';
@@ -18,36 +19,10 @@ const WithdrawRequestscreen = ()=>{
 
     const [isLoading, setIsLoading] = useState(false)
 
-    const copyToClipboard = async (text: string) => {
-        await Clipboard.setStringAsync(text);
-        Alert.alert("Copied", "Account number copied to clipboard.");
-    };
-
-    const handleApprovePress = (id: string) => {
-        setSelectedRequestId(id);
-        setModalVisible(true);
-    };
-
-    const confirmApproval = () => {
-        if (!selectedRequestId) return;
-
-        console.log(selectedRequestId)
-
-        setWithdrawRequests(prevRequests =>
-            prevRequests.map(req =>
-                req.id === selectedRequestId ? { ...req, settled: true } : req
-            )
-        );
-
-        setModalVisible(false);
-        setSelectedRequestId(null);
 
 
-        // Here you would also make an API call to your backend to finalize the approval
-    };
-    
-    useEffect(()=>{
-        const getWithdrawRequests = async()=>{
+
+    const getWithdrawRequests = async()=>{
             setIsLoading(true)
 
             const response = await WithdrawRequestContoller();
@@ -63,10 +38,73 @@ const WithdrawRequestscreen = ()=>{
 
             setIsLoading(false)
 
-        }
+    }
 
+    useEffect(()=>{
+        console.log(withdrawRequests)
         getWithdrawRequests();
     }, []);
+
+
+
+    const copyToClipboard = async (text: string) => {
+        await Clipboard.setStringAsync(text);
+        Alert.alert("Copied", "Account number copied to clipboard.");
+    };
+
+
+    const handleApprovePress = (id: string) => {
+        setSelectedRequestId(id);
+        setModalVisible(true);
+    };
+
+    const confirmApproval = () => {
+        if (!selectedRequestId) return;
+
+        setModalVisible(false);
+
+        setIsLoading(true)
+
+
+        // Here you would also make an API call to your backend to finalize the approval
+
+
+
+        withdrawRequests.forEach(async(reqItem)=>{
+            if (reqItem.id === selectedRequestId){
+                reqItem.settled = true;
+
+                console.log("Logged")
+
+
+                const response = await UpdateWithdrawController(reqItem.id, reqItem.email, reqItem.accountNumber, reqItem.accountName, reqItem.bankName, reqItem.amount, reqItem.settled);
+                if (response.status === 200){
+
+                    setIsLoading(false)
+                    Alert.alert("Update Feedback", "Request has been Settled",  [{ text: 'OK', onPress: () => getWithdrawRequests() }])
+                }
+                else{
+                    console.log(response.message)
+                    setIsLoading(false)
+                    reqItem.settled = false;
+                    Alert.alert("Update Feedback", "Something went wrong please try again!");
+
+                }
+
+            }
+        })
+
+
+
+        setSelectedRequestId(null);
+        setIsLoading(false)
+    };
+
+
+    
+
+
+
 
     return(
         <SafeAreaView className="flex-1 bg-gray-50">
@@ -81,7 +119,7 @@ const WithdrawRequestscreen = ()=>{
             <FlatList
                 data={withdrawRequests}
                 keyExtractor={(item) => item.id}
-                contentContainerStyle={{ padding: 16 }}
+                contentContainerStyle={{ padding: 16}}
                 renderItem={({ item }) => (
                     <View className="bg-white p-4 rounded-lg shadow-sm mb-4 border border-gray-100">
                         <View className="flex-row justify-between items-start">
@@ -97,7 +135,8 @@ const WithdrawRequestscreen = ()=>{
                             </View>
                             <Text className="text-xl font-monasans-bold" style={{color: AppDetails.color.iconColors}}>{formatAmount(item.amount)}</Text>
                         </View>
-                        <View className="flex-row justify-end mt-4 pt-4 border-t border-gray-100">
+                        <View className="flex-row justify-between items-center mt-4 pt-4 border-t border-gray-100">
+                            <Text className="text-xs text-gray-400 font-monasans-regular">ID: {item.id}</Text>
                             {item.settled === false ? (
                                 <>
                                    
@@ -106,9 +145,11 @@ const WithdrawRequestscreen = ()=>{
                                     </TouchableOpacity>
                                 </>
                             ) : (
-                                <View className="flex-row items-center bg-green-100 py-2 px-4 rounded-full">
-                                    <Ionicons name="checkmark-circle" size={20} color="green" />
-                                    <Text className="font-monasans-bold text-green-800 ml-2">Settled</Text>
+                                <View>
+                                    <View className="flex-row items-center bg-green-100 py-2 px-4 rounded-full">
+                                        <Ionicons name="checkmark-circle" size={20} color="green" />
+                                        <Text className="font-monasans-bold text-green-800 ml-2">Settled</Text>
+                                    </View>
                                 </View>
                             )}
                         </View>
@@ -121,13 +162,14 @@ const WithdrawRequestscreen = ()=>{
                     </View>
                 )}
             />
+
             <FeedBackPanel
                 visible={isModalVisible}
                 message="Are you sure you want to approve this request?"
                 onConfirm={confirmApproval}
                 onCancel={() => setModalVisible(false)}
             />
-            {isLoading && <Loader />}
+            {isLoading && <Loader /> } 
         </SafeAreaView>
     )
 }

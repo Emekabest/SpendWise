@@ -55,10 +55,12 @@ const LoginScreen = () => {
 
         setIsLoading(true);
         
-        const message = await loginController(email, pin)
+
+        const message = await loginController(email.trim(), pin.trim())
 
 
         setFormFeedbackMsg(message?.status === 403 ? message.message : '')
+        console.log(message.message)
         if (message?.status === 403 || message.status === 400){
                 setFormFeedbackMsg(message.message)
 
@@ -67,10 +69,10 @@ const LoginScreen = () => {
 
             await AsyncStorage.setItem("is-launched", "true")
             await AsyncStorage.setItem("email", email.trim())
-            await AsyncStorage.setItem("user-email", email.toString())
+            await AsyncStorage.setItem("user-email", email.trim())
 
             
-            router.dismissAll()   
+            router.dismissAll()
             router.replace("/homescreen")
           }
 

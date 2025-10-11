@@ -1,11 +1,12 @@
 import axios from "axios"
 
 
-const WithdrawController = async(email, accountNumber, accountName, bankName, amount, settled)=>{
+const UpdateWithdrawController = async(id, email, accountNumber, accountName, bankName, amount, settled)=>{
+
 
     try{
-        const url = 'https://50gjymfsz0.execute-api.us-east-1.amazonaws.com/dev/withdraw'
-        const response = await axios.post(url, {email, accountNumber, accountName, bankName, amount, settled})
+        const url = 'https://50gjymfsz0.execute-api.us-east-1.amazonaws.com/dev/updatewithdraw'
+        const response = await axios.post(url, {id, email, accountNumber, accountName, bankName, amount, settled})
         
 
         console.log(response.data)
@@ -23,9 +24,12 @@ const WithdrawController = async(email, accountNumber, accountName, bankName, am
           
           return {status:error.code, message:error}
     }
+    
+
 
 
 
 }
 
-export default WithdrawController
+
+export default UpdateWithdrawController;

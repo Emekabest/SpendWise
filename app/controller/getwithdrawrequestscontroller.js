@@ -1,7 +1,7 @@
 import axios from "axios"
 
 
-const WithdrawRequestsController = async()=>{
+const GetWithdrawRequestsController = async()=>{
 
     try{
         const url = 'https://50gjymfsz0.execute-api.us-east-1.amazonaws.com/dev/getwithdraws'
@@ -29,4 +29,4 @@ const WithdrawRequestsController = async()=>{
     
 }
 
-export default WithdrawRequestsController
+export default GetWithdrawRequestsController

@@ -63,11 +63,16 @@ const ProfileScreen = ()=>{
 
 
     useEffect(()=>{
+
         const editProfileOptions = async()=>{
             const userEmail = await AsyncStorage.getItem("user-email")
 
             admins.forEach((admin)=>{
+
+                console.log(admin == userEmail?.trim())
+
                 if (admin == userEmail){
+
                     profileOptions.push({
                         title: "Admin Section",
                         icon: "person-circle-outline",
