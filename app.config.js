@@ -3,7 +3,9 @@ export default ({ config }) => ({
   expo: {
     "name": "SpendWise",
     "slug": "SpendWise",
-    ...config.expo,
+    android: {
+      package: "com.jojo104.spendwise", // 👈 change this to your preferred unique ID
+    },  
   extra: {
     ...config.expo?.extra, // Preserve existing properties
     API_URL: process.env.API_URL,
