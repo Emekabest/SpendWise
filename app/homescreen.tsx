@@ -41,31 +41,30 @@ const HomeScreen  = ()=>{
     const noti = [
         {
             id: '1',
+            type:"payment-successful",
             title: 'Payment Successful',
             message: 'You have successfully added ₦5,000 to your account.',
             timestamp: '10 mins ago',
             read: false,
-            icon: 'checkmark-circle',
-            iconColor: '#10B981', // green-500
         },
-        {
-            id: '2',
-            title: 'Budget Alert',
-            message: 'You are approaching your weekly budget limit for "Food".',
-            timestamp: '1 hour ago',
-            read: false,
-            icon: 'warning',
-            iconColor: '#F59E0B', // amber-500
-        },
+
 
         {
             id: '3',
+            type:"withdrawal-settled",
             title: 'Withdrawal Processed',
             message: 'Your withdrawal of ₦2,500 has been processed.',
             timestamp: '5 hours ago',
             read: true,
-            icon: 'arrow-up-circle',
-            iconColor: '#3B82F6', // blue-500
+        },
+
+        {
+            id: '4',
+            type:"welcome",
+            title: 'Welcome to SpendWise!',
+            message: 'Get started by creating a Budget',
+            timestamp: '1 day ago',
+            read: true,
         },
     ]
 
@@ -73,9 +72,9 @@ const HomeScreen  = ()=>{
     const getHomeData = async()=>{
         setIsLoading(true);
 
-        const email = await AsyncStorage.getItem("user-email");
+        const userEmail = await AsyncStorage.getItem("user-email");
 
-        const response = await HomeController(email)
+        const response = await HomeController(userEmail)
         
         if (response.status === 200){
             const user = response.data.user;
@@ -87,7 +86,7 @@ const HomeScreen  = ()=>{
 
             setTotalBalanceStore(user.balance)
 
-            setNotificationsStore([...noti])
+            setNotificationsStore([...response.data.notifications].reverse())
 
 
             if (response.data.budget){
@@ -118,7 +117,7 @@ const HomeScreen  = ()=>{
         getHomeData()
     },[])
 
-    
+
     useFocusEffect(
         useCallback(() => {
             const checkNotifications = async () => {

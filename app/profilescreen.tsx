@@ -69,7 +69,7 @@ const ProfileScreen = ()=>{
 
             admins.forEach((admin)=>{
 
-                console.log(admin == userEmail?.trim())
+                console.log(admin == userEmail)
 
                 if (admin == userEmail){
 

@@ -39,6 +39,7 @@ const NotificationScreen = () => {
             icon: 'arrow-up-circle',
             iconColor: '#3B82F6', // blue-500
         },
+
         {
             id: '4',
             title: 'New Feature!',
@@ -88,7 +89,13 @@ const NotificationScreen = () => {
             className={`p-4 border-b border-gray-100 flex-row items-start ${!item.read ? 'bg-blue-50' : 'bg-white'}`}
         >
             <View className="mr-4 mt-1">
-                <Ionicons name={item.icon as any} size={24} color={item.iconColor} />
+                <Ionicons name={item.type == "payment-successful" ? "checkmark-circle" as any :
+                    item.type == "withdrawal-settled" ? "arrow-up-circle" as any : 
+                    item.type == "welcome" ? "sparkles" as any :""} size={24} 
+                    
+                    color={item.type == "payment-successful" ? "#10B981" : item.type == "withdrawal-settled" ? "#3B82F6" : ""}
+             />
+
             </View>
             <View className="flex-1">
                 <Text className="text-base font-monasans-bold text-gray-800">{item.title}</Text>

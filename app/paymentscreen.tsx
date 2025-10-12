@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React from 'react';
 import {
@@ -12,6 +13,8 @@ import {
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import AddFundsController from "./controller/addfundscontroller";
+import NotificationController from './controller/notificationcontroller';
+import formatAmount from './service/formatamount';
 
 
 
@@ -19,6 +22,7 @@ const PaymentScreen = () => {
   const router = useRouter();
   const params = useLocalSearchParams();
 
+  
   const amount = params.amount || '0'; // Default amount
   const email = params.email || 'customer@email.com'; // Default email
 const reference = `REF-${Math.floor(Math.random() * 1000000000)}-${Date.now()}`;
@@ -29,15 +33,32 @@ const reference = `REF-${Math.floor(Math.random() * 1000000000)}-${Date.now()}`;
 //  pk_live_099fb8dcd678b1213971335d42dc25be20e0ce1b
   const PAYSTACK_PUBLIC_KEY = 'pk_test_49f11d97818e250a00077f276cd3a13dbeca0d1c';
 
+  
+
+
   const handleSuccess = async(transactionRef: string) => {
 
-    const response = await AddFundsController(email, amount)
+    const numericAmount = parseFloat(amount);
+
+    const response = await AddFundsController(email, amount);
 
     if (response.status === 200){
+      const userEmail = await AsyncStorage.getItem("user-email");
+
+
+
+        const notificationResponse = await NotificationController(
+              userEmail, 
+              "payment-successful",
+              "Payment Successful", 
+              "You have successfully added " + formatAmount(numericAmount) + " to your account",
+              null,
+              false
+          );
 
         Alert.alert(
         'Payment Successful',
-        `Your account has been credited with ₦${amount}.`,
+        `Your account has been credited with ${formatAmount(numericAmount)}.`,
         [{ text: 'OK', onPress: () => router.replace("/homescreen") }]
       );
 

@@ -13,6 +13,7 @@ import {
     View
 } from "react-native";
 import CreateAccountController from "./controller/createaccountcontroller";
+import NotificationController from './controller/notificationcontroller';
 import VerifyOtpController from './controller/verifyOtpController';
 import Loader from './loader';
 import AppDetails from './service/AppService';
@@ -114,7 +115,18 @@ const OtpScreen = ()=>{
                     setFormFeedbackMsg("Successful");
 
 
-                    await AsyncStorage.setItem("user-email", email.toString())
+
+                    await AsyncStorage.setItem("user-email", email.toString().trim())
+
+                      const notificationResponse = await NotificationController(
+                            email.toString().trim(),
+                            "welcome",
+                            "Welcome to SpendWise!",
+                            "Get started by creating a budget",
+                            null,
+                            false
+                        );
+
 
                     
                     router.replace('/loginscreen2');

@@ -44,7 +44,6 @@ const CreateAccountScreen = () => {
                 }
                 else if (otpResponse.status === 200){
 
-                    console.log("Otp sent successfully")
 
                     router.push({pathname:"/otpscreen", params:{firstName, lastName, email, pin}});
                 }

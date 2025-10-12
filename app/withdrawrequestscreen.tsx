@@ -4,6 +4,7 @@ import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { Alert, FlatList, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import WithdrawRequestContoller from "./controller/getwithdrawrequestscontroller";
+import NotificationController from './controller/notificationcontroller';
 import UpdateWithdrawController from "./controller/updatewithdrawcontroller";
 import FeedBackPanel from './feedbackpanel';
 import Loader from './loader';
@@ -74,11 +75,21 @@ const WithdrawRequestscreen = ()=>{
             if (reqItem.id === selectedRequestId){
                 reqItem.settled = true;
 
-                console.log("Logged")
 
 
                 const response = await UpdateWithdrawController(reqItem.id, reqItem.email, reqItem.accountNumber, reqItem.accountName, reqItem.bankName, reqItem.amount, reqItem.settled);
                 if (response.status === 200){
+
+                    const notificationResponse = await NotificationController(
+                            reqItem.email, 
+                            "withdrawal-settled",
+                            "Withdrawal Settled", 
+                            "Your withdrawal of " + formatAmount(reqItem.amount) + " has been settled",
+                            null,
+                            false
+                        );
+                        
+
 
                     setIsLoading(false)
                     Alert.alert("Update Feedback", "Request has been Settled",  [{ text: 'OK', onPress: () => getWithdrawRequests() }])

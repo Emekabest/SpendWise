@@ -7,6 +7,7 @@ import WithdrawController from "./controller/withdrawcontroller";
 import Loader from './loader';
 import useSharedStore from "./repository/store";
 import AppDetails from './service/AppService';
+import formatAmount from './service/formatamount';
 
 const WithDrawFundsScreen = ()=>{
   
@@ -80,7 +81,7 @@ const WithDrawFundsScreen = ()=>{
 
             Alert.alert(
             'Withdraw Successful',
-            `Your account has been debited with ₦${amount}.
+            `Your account has been debited with ${formatAmount(withdrawAmount)}.
             Please check you bank account after few minutes for confirmation.`,
             [{ text: 'OK', onPress: () => router.replace("/homescreen")}]
           );
@@ -96,7 +97,7 @@ const WithDrawFundsScreen = ()=>{
       }
     
 
-  };
+    };
 
 
 
