@@ -1,10 +1,13 @@
-import axios from "axios"
+import axios from "axios";
+import Constants from "expo-constants";
 
 
 const WithdrawController = async(email, accountNumber, accountName, bankName, amount, settled)=>{
+    const API_URL = Constants.expoConfig?.extra?.API_URL;
+    
 
     try{
-        const url = 'https://50gjymfsz0.execute-api.us-east-1.amazonaws.com/dev/withdraw'
+        const url = API_URL + '/withdraw'
         const response = await axios.post(url, {email, accountNumber, accountName, bankName, amount, settled})
         
 

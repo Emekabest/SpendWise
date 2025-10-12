@@ -1,10 +1,14 @@
-import axios from "axios"
+import axios from "axios";
+import Constants from 'expo-constants';
+
 
 
 const NotificationController = async(userEmail, type, title, message, time, read)=>{
+    const API_URL = Constants.expoConfig?.extra?.API_URL;
+    
 
     try{
-        const url = 'https://50gjymfsz0.execute-api.us-east-1.amazonaws.com/dev/set-notification'
+        const url = API_URL + '/set-notification'
         const response = await axios.post(url, {userEmail, type, title, message, time, read})
         
 

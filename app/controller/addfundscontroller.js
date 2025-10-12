@@ -1,13 +1,18 @@
 import axios from "axios";
+import Constants from 'expo-constants';
+
+
 
 
 const AddFundsController = async(email, amount)=>{
+    const API_URL = Constants.expoConfig?.extra?.API_URL;
+    
 
         try{
 
             //Authenication Procedure should be implemented in this api for security analysis
 
-            const url = `https://50gjymfsz0.execute-api.us-east-1.amazonaws.com/dev/addfunds`;
+            const url = API_URL + `/addfunds`;
             const response = await axios.post(url, {email, balance:amount })
 
             console.log(response.data)

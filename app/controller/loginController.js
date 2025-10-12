@@ -1,8 +1,12 @@
 import axios from "axios";
+import Constants from 'expo-constants';
 import TextFieldService from "../service/TextFieldService";
 
 
+
 const loginController = async(email, pin)=>{
+    const API_URL = Constants.expoConfig?.extra?.API_URL;
+    
 
     let signinFeedbackMessage = TextFieldService(["email"], {email})
 
@@ -14,7 +18,7 @@ const loginController = async(email, pin)=>{
     
 
     try {
-        const url = 'https://50gjymfsz0.execute-api.us-east-1.amazonaws.com/dev/signin'
+        const url = API_URL + '/signin'
         const response = await axios.post(url, {email, pin})
 
 

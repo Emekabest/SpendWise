@@ -1,10 +1,14 @@
 import axios from "axios";
+import Constants from 'expo-constants';
+
 
 
 const otpController = async(email)=>{
+    const API_URL = Constants.expoConfig?.extra?.API_URL;
+    
 
     try{
-            const url = 'https://50gjymfsz0.execute-api.us-east-1.amazonaws.com/dev/sendotp';
+            const url = API_URL + '/sendotp';
             const response = await axios.post(url, {email})
 
             if (response.data == "Successful"){
