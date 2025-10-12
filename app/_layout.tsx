@@ -99,6 +99,7 @@ export default function RootLayout(){
               <Stack.Screen name="profilescreen" options={{headerShown:false}}/>
               <Stack.Screen name="adminsectionscreen" options={{headerShown:false}}/>
               <Stack.Screen name="withdrawrequestscreen" options={{headerShown:false}}/>
+              <Stack.Screen name="notificationscreen" options={{headerShown:false}}/>
             </Stack>
           </SafeAreaView>
           {showNavBar && <NavigationBar />}

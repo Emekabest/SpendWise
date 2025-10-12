@@ -85,7 +85,7 @@ const HomeScreen  = ()=>{
             <View className="flex-1 p-4">
                 <View className="h-[10%] flex-row justify-between items-center">
                     <Text className="text-lg font-monasans-bold text-gray-800">Hi, {firstname}</Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => router.push('/notificationscreen')}>
                         <Ionicons name="notifications-outline" size={28} color="#333" />
                     </TouchableOpacity>
                 </View>
@@ -95,7 +95,7 @@ const HomeScreen  = ()=>{
                         <Text className="text-white text-2xl font-monasans-bold">{formatAmount(budgetData.accessAmount)}</Text>
                     </View>
                         
-
+                        
                     <TouchableOpacity onPress={getHomeData}>
                         <Ionicons name="refresh" size={28} color="white" />
                     </TouchableOpacity>
