@@ -1,10 +1,14 @@
-import axios from "axios"
+import axios from "axios";
+import Constants from 'expo-constants';
+
 
 
 const GetWithdrawRequestsController = async()=>{
+    const API_URL = Constants.expoConfig?.extra?.API_URL;
+    
 
     try{
-        const url = 'https://50gjymfsz0.execute-api.us-east-1.amazonaws.com/dev/getwithdraws'
+        const url = API_URL + '/getwithdraws'
         const response = await axios.get(url)
         
 

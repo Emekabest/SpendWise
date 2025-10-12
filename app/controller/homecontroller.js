@@ -1,11 +1,14 @@
-import axios from "axios"
+import axios from "axios";
+import Constants from 'expo-constants';
 
 
 const HomeController = async(email)=>{
+const API_URL = Constants.expoConfig?.extra?.API_URL;
+
 
     try{
 
-            const url = `https://50gjymfsz0.execute-api.us-east-1.amazonaws.com/dev/home?email=${email}`
+            const url = `${API_URL}/home?email=${email}`
             const response = await axios.get(url)
             
             if (response.data.user.firstname != undefined){

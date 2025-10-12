@@ -1,9 +1,12 @@
 import axios from "axios";
+import Constants from 'expo-constants';
 
 const CreateAccountController = async(firstname, lastname, email, pin)=>{
+    const API_URL = Constants.expoConfig?.extra?.API_URL;
+    
 
     try{
-        const url = 'https://50gjymfsz0.execute-api.us-east-1.amazonaws.com/dev/signup'
+        const url =  API_URL + '/signup'
         const response = await axios.post(url, {firstname, lastname, email, pin})
         
 

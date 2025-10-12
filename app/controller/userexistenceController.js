@@ -1,9 +1,13 @@
 import axios from "axios";
+import Constants from 'expo-constants';
 import TextFieldService from "../service/TextFieldService";
 
 
 
+
 const UserExistenceController = async(firstname, lastname, email, pin, confirmPin)=>{
+    const API_URL = Constants.expoConfig?.extra?.API_URL;
+    
 
     let signupFeedbackMessage = TextFieldService(["firstname", "lastname", "email", "pin", "confirmPin"], {firstname, lastname, email, pin, confirmPin})
 
@@ -16,7 +20,7 @@ const UserExistenceController = async(firstname, lastname, email, pin, confirmPi
 
 
     try{
-        const url = 'https://50gjymfsz0.execute-api.us-east-1.amazonaws.com/dev/checkuser';
+        const url = API_URL + '/checkuser';
         const response = await axios.post(url, {email})
 
         console.log(response.data)
