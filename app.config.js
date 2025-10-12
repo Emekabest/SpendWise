@@ -1,6 +1,8 @@
 export default ({ config }) => ({
   ...config,
   expo: {
+    "name": "SpendWise",
+    "slug": "SpendWise",
     ...config.expo,
   extra: {
     ...config.expo?.extra, // Preserve existing properties
