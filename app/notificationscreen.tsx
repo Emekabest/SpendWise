@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
@@ -10,7 +11,7 @@ const NotificationScreen = () => {
 
     // Mock data for notifications
 
-    const noti = [
+    const demo = [
         {
             id: '1',
             title: 'Payment Successful',
@@ -52,7 +53,7 @@ const NotificationScreen = () => {
     const notificationsStore = useSharedStore((state) => state.notifications);
 
     
-    const [notifications, setNotifications] = useState(noti);
+    const [notifications, setNotifications] = useState([]);
 
 
 
@@ -64,6 +65,14 @@ const NotificationScreen = () => {
         }
         getNotifications()
     },[])
+
+    useEffect(() => {
+        // When the user visits this screen, update the "seen" count.
+        const markAsSeen = async () => {
+            await AsyncStorage.setItem('lastSeenNotificationCount', String(notifications.length));
+        };
+        markAsSeen();
+    }, [notifications]);
 
     
 

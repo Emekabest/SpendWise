@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { router } from "expo-router";
-import React, { useEffect, useState } from "react";
+import { router, useFocusEffect } from "expo-router";
+import React, { useCallback, useEffect, useState } from "react";
 import { Dimensions, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import HomeController from "./controller/homecontroller";
 import Loader from "./loader";
@@ -23,7 +23,7 @@ const HomeScreen  = ()=>{
     const [isLoading, setIsLoading] = useState(false);
 
     const [budgetData, setBudgetData] = useState({limitAmount:0, accessAmount:0});
-    const [hasUnreadNotifications, setHasUnreadNotifications] = useState(true); // Will be dynamic later
+    const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
     
 
 
@@ -56,7 +56,17 @@ const HomeScreen  = ()=>{
             read: false,
             icon: 'warning',
             iconColor: '#F59E0B', // amber-500
-        }
+        },
+
+        {
+            id: '3',
+            title: 'Withdrawal Processed',
+            message: 'Your withdrawal of ₦2,500 has been processed.',
+            timestamp: '5 hours ago',
+            read: true,
+            icon: 'arrow-up-circle',
+            iconColor: '#3B82F6', // blue-500
+        },
     ]
 
     
@@ -108,18 +118,34 @@ const HomeScreen  = ()=>{
         getHomeData()
     },[])
 
+    
+    useFocusEffect(
+        useCallback(() => {
+            const checkNotifications = async () => {
+                const lastSeenCountStr = await AsyncStorage.getItem('lastSeenNotificationCount');
+                const lastSeenCount = lastSeenCountStr ? parseInt(lastSeenCountStr, 10) : 0;
+
+                if (notificationsStore.length > lastSeenCount) {
+                    setHasUnreadNotifications(true);
+                } else {
+                    setHasUnreadNotifications(false);
+                }
+            };
+            checkNotifications();
+        }, [notificationsStore])
+    );
+
 
   return (
         <SafeAreaView className="flex-1 bg-white">
             <StatusBar barStyle="default" />
-
             <View className="flex-1 p-4">
                 <View className="h-[10%] flex-row justify-between items-center">
                     <Text className="text-lg font-monasans-bold text-gray-800">Hi, {firstname}</Text>
-                    <TouchableOpacity activeOpacity={1} onPress={() => router.push('/notificationscreen')} className="relative">
+                    <TouchableOpacity onPress={() => router.push('/notificationscreen')} className="relative">
                         <Ionicons name="notifications-outline" size={28} color="#333" />
                         {hasUnreadNotifications && (
-                            <View className="absolute right-0.5 top-0.5 w-2.5 h-2.5 rounded-full border border-white" style={{backgroundColor:"red"}} />
+                            <View className="absolute right-0.5 top-0.5 w-2.5 h-2.5 bg-red-500 rounded-full border border-white" />
                         )}
                     </TouchableOpacity>
                 </View>
