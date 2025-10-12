@@ -23,6 +23,7 @@ const HomeScreen  = ()=>{
     const [isLoading, setIsLoading] = useState(false);
 
     const [budgetData, setBudgetData] = useState({limitAmount:0, accessAmount:0});
+    const [hasUnreadNotifications, setHasUnreadNotifications] = useState(true); // Will be dynamic later
     
 
 
@@ -30,8 +31,30 @@ const HomeScreen  = ()=>{
     const budgetStore = useSharedStore((state) => state.budget);
     const setBudgetStore = useSharedStore((state) => state.setBudget);
     
-
     const setTotalBalanceStore = useSharedStore((state) => state.setTotalBalance);
+
+    const setNotificationsStore = useSharedStore((state) => state.setNotifications);
+
+        const noti = [
+        {
+            id: '1',
+            title: 'Payment Successful',
+            message: 'You have successfully added ₦5,000 to your account.',
+            timestamp: '10 mins ago',
+            read: false,
+            icon: 'checkmark-circle',
+            iconColor: '#10B981', // green-500
+        },
+        {
+            id: '2',
+            title: 'Budget Alert',
+            message: 'You are approaching your weekly budget limit for "Food".',
+            timestamp: '1 hour ago',
+            read: false,
+            icon: 'warning',
+            iconColor: '#F59E0B', // amber-500
+        }
+    ]
 
     
     const getHomeData = async()=>{
@@ -46,8 +69,9 @@ const HomeScreen  = ()=>{
             setFirstname(user.firstname)
             setBalance(user.balance)
 
-
             setTotalBalanceStore(user.balance)
+
+            setNotificationsStore([...noti])
 
 
             if (response.data.budget){
@@ -82,11 +106,15 @@ const HomeScreen  = ()=>{
   return (
         <SafeAreaView className="flex-1 bg-white">
             <StatusBar barStyle="default" />
+
             <View className="flex-1 p-4">
                 <View className="h-[10%] flex-row justify-between items-center">
                     <Text className="text-lg font-monasans-bold text-gray-800">Hi, {firstname}</Text>
-                    <TouchableOpacity onPress={() => router.push('/notificationscreen')}>
+                    <TouchableOpacity activeOpacity={1} onPress={() => router.push('/notificationscreen')} className="relative">
                         <Ionicons name="notifications-outline" size={28} color="#333" />
+                        {hasUnreadNotifications && (
+                            <View className="absolute right-0.5 top-0.5 w-2.5 h-2.5 bg-red-500 rounded-full border border-white" />
+                        )}
                     </TouchableOpacity>
                 </View>
                 <View className="h-[15%] w-[100%] rounded-2xl flex-row p-4 justify-between items-center" style={{backgroundColor:AppDetails.color.iconColors}}>{/**Balance and Funds Section */}

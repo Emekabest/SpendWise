@@ -12,6 +12,8 @@ const store = create((set) => ({
     totalBalance:0,
     setTotalBalance:(state)=> set({totalBalance: state}),
 
+    notifications:[],
+    setNotifications:(state)=> set({notifications: state}),
 
 }));
 

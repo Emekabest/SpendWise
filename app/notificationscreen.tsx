@@ -1,13 +1,16 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import useSharedStore from "./repository/store";
+
 
 const NotificationScreen = () => {
     const router = useRouter();
 
     // Mock data for notifications
-    const [notifications, setNotifications] = useState([
+
+    const noti = [
         {
             id: '1',
             title: 'Payment Successful',
@@ -44,7 +47,31 @@ const NotificationScreen = () => {
             icon: 'sparkles',
             iconColor: '#8B5CF6', // violet-500
         },
-    ]);
+    ]
+
+    const notificationsStore = useSharedStore((state) => state.notifications);
+
+    
+    const [notifications, setNotifications] = useState(noti);
+
+
+
+    useEffect(()=>{
+
+        const getNotifications = ()=>{
+            setNotifications(notificationsStore)
+
+        }
+        getNotifications()
+    },[])
+
+    
+
+
+
+
+
+
 
     const renderItem = ({ item }) => (
         <TouchableOpacity 
