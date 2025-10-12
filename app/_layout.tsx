@@ -3,12 +3,13 @@ import 'react-native-reanimated';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFonts } from 'expo-font';
 import { router, SplashScreen, Stack, usePathname } from 'expo-router';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { StatusBar, View } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import "../global.css";
 import NavigationBar from './navigationbar';
 import ActivateFonts from './service/ActivateFonts';
+
 
 
 
@@ -26,12 +27,19 @@ export default function RootLayout(){
 
   const [fontsLoaded, fontError] = useFonts(ActivateFonts);
 
-  const onLayoutRootView = useCallback(async () => {
+  useEffect(() => {
     if (fontsLoaded || fontError) {
-      // Hide the splash screen once the fonts have loaded (or an error occurred)
-      await SplashScreen.hideAsync();
+      
+      SplashScreen.hideAsync();
     }
   }, [fontsLoaded, fontError]);
+
+  // const onLayoutRootView = useCallback(async () => {
+  //   if (fontsLoaded || fontError) {
+  //     // Hide the splash screen once the fonts have loaded (or an error occurred)
+  //     await SplashScreen.hideAsync();
+  //   }
+  // }, [fontsLoaded, fontError]);
 
 
   const insets = useSafeAreaInsets();
@@ -78,7 +86,7 @@ export default function RootLayout(){
 
 
   return (
-        <View onLayout={onLayoutRootView} style={{ flex: 1, backgroundColor: "#fff" }}>
+        <View style={{ flex: 1, backgroundColor: "#fff" }}>
           <StatusBar barStyle="default"/>
           {/* This SafeAreaView ensures the Stack content is not hidden by the status bar */}
           <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
