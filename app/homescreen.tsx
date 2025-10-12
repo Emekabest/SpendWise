@@ -33,9 +33,12 @@ const HomeScreen  = ()=>{
     
     const setTotalBalanceStore = useSharedStore((state) => state.setTotalBalance);
 
+
+
+    const notificationsStore = useSharedStore((state) => state.notifications);
     const setNotificationsStore = useSharedStore((state) => state.setNotifications);
 
-        const noti = [
+    const noti = [
         {
             id: '1',
             title: 'Payment Successful',
@@ -63,11 +66,14 @@ const HomeScreen  = ()=>{
         const email = await AsyncStorage.getItem("user-email");
 
         const response = await HomeController(email)
+        
         if (response.status === 200){
             const user = response.data.user;
 
             setFirstname(user.firstname)
             setBalance(user.balance)
+
+
 
             setTotalBalanceStore(user.balance)
 
@@ -113,7 +119,7 @@ const HomeScreen  = ()=>{
                     <TouchableOpacity activeOpacity={1} onPress={() => router.push('/notificationscreen')} className="relative">
                         <Ionicons name="notifications-outline" size={28} color="#333" />
                         {hasUnreadNotifications && (
-                            <View className="absolute right-0.5 top-0.5 w-2.5 h-2.5 bg-red-500 rounded-full border border-white" />
+                            <View className="absolute right-0.5 top-0.5 w-2.5 h-2.5 rounded-full border border-white" style={{backgroundColor:"red"}} />
                         )}
                     </TouchableOpacity>
                 </View>
