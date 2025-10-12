@@ -83,11 +83,11 @@ const HomeScreen  = ()=>{
         <SafeAreaView className="flex-1 bg-white">
             <StatusBar barStyle="default" />
             <View className="flex-1 p-4">
-                <View className="h-[10%] flex-row">
-                    <View className="h-[100%] w-[50%] justify-center">
-                        <Text className="text-lg font-monasans-bold text-gray-800">Hi, {firstname}</Text>
-                    </View>
-                    <View></View>
+                <View className="h-[10%] flex-row justify-between items-center">
+                    <Text className="text-lg font-monasans-bold text-gray-800">Hi, {firstname}</Text>
+                    <TouchableOpacity>
+                        <Ionicons name="notifications-outline" size={28} color="#333" />
+                    </TouchableOpacity>
                 </View>
                 <View className="h-[15%] w-[100%] rounded-2xl flex-row p-4 justify-between items-center" style={{backgroundColor:AppDetails.color.iconColors}}>{/**Balance and Funds Section */}
                     <View className="h-full justify-between">
