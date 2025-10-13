@@ -134,6 +134,7 @@ const DailyBudgetScreen = () => {
             setLimitAmount(text);
             if (error) setError('');
           }}
+          placeholderTextColor="lightgray"
         />
         {error ? <Text className="text-red-500 font-monasans-light mt-2 ml-1">{error}</Text> : null}
         

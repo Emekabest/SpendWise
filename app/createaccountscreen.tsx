@@ -87,11 +87,12 @@ const CreateAccountScreen = () => {
                         <View className="w-full mb-4">
                             <Text className="text-gray-600 mb-2 ml-1 font-medium">First Name</Text>
                             <TextInput
-                                className="border border-gray-300 p-3 color-[#333] rounded-lg w-full bg-gray-50"
+                                className="border border-gray-300 p-3  rounded-lg w-full bg-gray-50"
                                 placeholder="Enter your first name"
                                 value={firstName}
                                 onChangeText={setFirstName}
                                 autoCapitalize="words"
+                                placeholderTextColor="lightgray"
                             />
                         </View>
 

@@ -144,11 +144,12 @@ const WithDrawFundsScreen = ()=>{
 
         <Text className="text-gray-600 mb-2 ml-1 font-medium">Amount</Text>
         <TextInput
-          className="border border-gray-300 p-4 color-[#333] rounded-lg w-full bg-white"
+          className="border border-gray-300 p-4 rounded-lg w-full bg-white"
           placeholder="Enter amount to withdraw"
           keyboardType="numeric"
           value={amount}
           onChangeText={setAmount}
+          placeholderTextColor="lightgray"
         />
 
         {error ? <Text className="text-red-500 mt-2 ml-1">{error}</Text> : null}

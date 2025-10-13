@@ -50,6 +50,7 @@ const AddFundScreen = () => {
           <TextInput
             className="flex-1 text-2xl py-4 text-gray-800 font-monasans-regular"
             placeholder="0.00"
+            placeholderTextColor="lightgray"
             keyboardType="numeric"
             value={amount}
             onChangeText={text => {

@@ -117,6 +117,7 @@ const LoginScreen2 = () => {
                                     onChangeText={setPassword}
                                     secureTextEntry={!isPasswordVisible}
                                     keyboardType="numeric"
+                                    placeholderTextColor="lightgray"
                                 />
 
                                 <TouchableOpacity onPress={() => setIsPasswordVisible(!isPasswordVisible)} className="absolute right-4">

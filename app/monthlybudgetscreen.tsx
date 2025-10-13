@@ -154,6 +154,7 @@ const MonthlyBudgetScreen = () => {
         <TextInput
           placeholder="Minimum of ₦1,000"
           keyboardType="numeric"
+          placeholderTextColor="lightgray"
           className="border border-gray-300 p-4 rounded-lg"
           value={limitAmount}
           onChangeText={(text) => {

@@ -149,6 +149,7 @@ const WeeklyBudgetScreen = () => {
         <Text className="text-gray-600 mb-2 ml-1 font-medium">Limit Amount</Text>
         <TextInput
           placeholder="Minimum of ₦1,000"
+          placeholderTextColor="lightgray"
           keyboardType="numeric"
           className="border border-gray-300 p-4 rounded-lg"
           value={limitAmount}
