@@ -117,6 +117,8 @@ const LoginScreen = () => {
                                 placeholder="Enter your email"
                                 value={email}
                                 onChangeText={setEmail}
+                                placeholderTextColor="lightgray"
+
                             />
                         </View>
                         
@@ -125,7 +127,7 @@ const LoginScreen = () => {
                             <Text className="text-gray-600 mb-2 ml-1 font-medium">Pin</Text>
                             <View className="relative justify-center">
                                 <TextInput
-                                    className="border border-gray-300 p-4 rounded-lg w-full bg-gray-50"
+                                    className="border border-gray-300 p-4 color-[#333] rounded-lg w-full bg-gray-50"
                                     placeholder="Enter your pin"
                                     value={pin}
                                     onChangeText={setPin}

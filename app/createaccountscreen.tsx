@@ -104,6 +104,7 @@ const CreateAccountScreen = () => {
                                 value={lastName}
                                 onChangeText={setLastName}
                                 autoCapitalize="words"
+                                placeholderTextColor="lightgray"
                             />
                         </View>
 
@@ -117,6 +118,7 @@ const CreateAccountScreen = () => {
                                 onChangeText={setEmail}
                                 keyboardType="email-address"
                                 autoCapitalize="none"
+                                placeholderTextColor="lightgray"
                             />
                         </View>
 
@@ -130,6 +132,7 @@ const CreateAccountScreen = () => {
                                     onChangeText={setPin}
                                     keyboardType="numeric"
                                     secureTextEntry={!isPinVisible}
+                                    placeholderTextColor="lightgray"
                                 />
                                 <TouchableOpacity onPress={() => setIsPinVisible(!isPinVisible)} className="absolute right-4">
                                     <Ionicons name={isPinVisible ? 'eye-off' : 'eye'} size={24} color="gray" />
@@ -147,6 +150,7 @@ const CreateAccountScreen = () => {
                                 onChangeText={setConfirmPin}
                                 keyboardType="numeric"
                                 secureTextEntry
+                                placeholderTextColor="lightgray"
                             />
                         </View>
 

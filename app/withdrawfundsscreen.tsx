@@ -123,6 +123,7 @@ const WithDrawFundsScreen = ()=>{
           keyboardType="number-pad"
           value={accountNumber}
           onChangeText={setAccountNumber}
+          placeholderTextColor="lightgray"
         />
 
         <Text className="text-gray-600 mb-2 ml-1 font-medium">Bank Name</Text>
@@ -131,6 +132,7 @@ const WithDrawFundsScreen = ()=>{
           placeholder="Enter your bank name"
           value={bankName}
           onChangeText={setBankName}
+          placeholderTextColor="lightgray"
         />
 
         <Text className="text-gray-600 mb-2 ml-1 font-medium">Account Name</Text>
@@ -139,6 +141,7 @@ const WithDrawFundsScreen = ()=>{
           placeholder="Enter your account name"
           value={accountName}
           onChangeText={setAccountName}
+          placeholderTextColor="lightgray"
         />
 
 

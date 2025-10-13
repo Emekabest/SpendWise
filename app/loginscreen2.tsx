@@ -111,7 +111,7 @@ const LoginScreen2 = () => {
                         <View className="w-full mb-6">
                             <View className="relative justify-center">
                                 <TextInput
-                                    className="border border-gray-300 p-4 rounded-lg w-full bg-gray-50"
+                                    className="border border-gray-300 color-[#333] p-4 rounded-lg w-full bg-gray-50"
                                     placeholder="Enter your pin"
                                     value={password}
                                     onChangeText={setPassword}
