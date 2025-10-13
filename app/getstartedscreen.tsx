@@ -51,6 +51,9 @@ const slides = [
 
 
 const Slide = ({ item }: { item: (typeof slides)[0] }) => {
+
+
+
   return (
     <View className="h-full items-center justify-center " style={{ width }}>
       <Image

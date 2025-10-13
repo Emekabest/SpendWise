@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigationState } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
 import { Link, Stack, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
@@ -15,6 +16,7 @@ import {
 } from 'react-native';
 import loginController from './controller/loginController';
 import Loader from './loader';
+import ActivateFonts from './service/ActivateFonts';
 import AppDetails from './service/AppService';
 
 
@@ -32,6 +34,9 @@ const LoginScreen = () => {
     const [isLoading, setIsLoading] = useState(false);    
     const [formFeedbackMsg, setFormFeedbackMsg] = useState('');
     const [isPinVisible, setIsPinVisible] = useState(false);
+
+    const [fontsLoaded, fontError] = useFonts(ActivateFonts);
+
 
 
     const handleGoBack = () => {
@@ -82,8 +87,10 @@ const LoginScreen = () => {
 
 
 
+    if (!fontsLoaded && !fontError) {
 
-
+        return <Loader />; // Return null or a loading indicator while fonts are loading
+    }
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
             <KeyboardAvoidingView
@@ -106,7 +113,7 @@ const LoginScreen = () => {
                         <View className="w-full mb-4">
                             <Text className="text-gray-600 mb-2 ml-1 font-medium">Email</Text>
                             <TextInput
-                                className="border border-gray-300 p-4 rounded-lg w-full bg-gray-50"
+                                className="border border-gray-300 color-[#333] p-4 rounded-lg w-full bg-gray-50"
                                 placeholder="Enter your email"
                                 value={email}
                                 onChangeText={setEmail}
@@ -118,10 +125,11 @@ const LoginScreen = () => {
                             <Text className="text-gray-600 mb-2 ml-1 font-medium">Pin</Text>
                             <View className="relative justify-center">
                                 <TextInput
-                                    className="border border-gray-300 p-4 rounded-lg w-full bg-gray-50"
+                                    className="border border-gray-300 color-[#333] p-4 rounded-lg w-full bg-gray-50"
                                     placeholder="Enter your pin"
                                     value={pin}
                                     onChangeText={setPin}
+                                    keyboardType="numeric"
                                     secureTextEntry={!isPinVisible}
                                 />
                                 <TouchableOpacity onPress={() => setIsPinVisible(!isPinVisible)} className="absolute right-4">

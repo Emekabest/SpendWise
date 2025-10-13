@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { Alert, SafeAreaView, StatusBar, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, SafeAreaView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import WithdrawController from "./controller/withdrawcontroller";
 import Loader from './loader';
 import useSharedStore from "./repository/store";
@@ -103,7 +103,7 @@ const WithDrawFundsScreen = ()=>{
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
-      <StatusBar barStyle="default" />
+
       <View className="flex-row items-center p-6 pb-3 bg-gray-50">
         <TouchableOpacity onPress={() => router.back()} className="mr-4">
           <Ionicons name="arrow-back" size={28} color="#1A1A1A" />
@@ -118,7 +118,7 @@ const WithDrawFundsScreen = ()=>{
       <View className="flex-1 p-6">
         <Text className="text-gray-600 mb-2 ml-1 font-medium">Account Number</Text>
         <TextInput
-          className="border border-gray-300 p-4 rounded-lg w-full bg-white mb-4"
+          className="border border-gray-300 p-4 color-[#333] rounded-lg w-full bg-white mb-4"
           placeholder="Enter your account number"
           keyboardType="number-pad"
           value={accountNumber}
@@ -127,7 +127,7 @@ const WithDrawFundsScreen = ()=>{
 
         <Text className="text-gray-600 mb-2 ml-1 font-medium">Bank Name</Text>
         <TextInput
-          className="border border-gray-300 p-4 rounded-lg w-full bg-white mb-4"
+          className="border border-gray-300 p-4 color-[#333] rounded-lg w-full bg-white mb-4"
           placeholder="Enter your bank name"
           value={bankName}
           onChangeText={setBankName}
@@ -135,7 +135,7 @@ const WithDrawFundsScreen = ()=>{
 
         <Text className="text-gray-600 mb-2 ml-1 font-medium">Account Name</Text>
         <TextInput
-          className="border border-gray-300 p-4 rounded-lg w-full bg-white mb-4"
+          className="border border-gray-300 p-4 color-[#333] rounded-lg w-full bg-white mb-4"
           placeholder="Enter your account name"
           value={accountName}
           onChangeText={setAccountName}
@@ -144,7 +144,7 @@ const WithDrawFundsScreen = ()=>{
 
         <Text className="text-gray-600 mb-2 ml-1 font-medium">Amount</Text>
         <TextInput
-          className="border border-gray-300 p-4 rounded-lg w-full bg-white"
+          className="border border-gray-300 p-4 color-[#333] rounded-lg w-full bg-white"
           placeholder="Enter amount to withdraw"
           keyboardType="numeric"
           value={amount}

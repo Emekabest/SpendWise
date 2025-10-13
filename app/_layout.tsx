@@ -84,6 +84,8 @@ export default function RootLayout(){
     checkIfLaunched();
   }, []);
 
+
+
   if (!fontsLoaded && !fontError) {
     return null; // Return null or a loading indicator while fonts are loading
   }
@@ -91,7 +93,7 @@ export default function RootLayout(){
 
   return (
         <View style={{ flex: 1, backgroundColor: "#fff" }}>
-          <StatusBar barStyle="default"/>
+          <StatusBar barStyle="dark-content" backgroundColor="#fff" translucent />
           {/* This SafeAreaView ensures the Stack content is not hidden by the status bar */}
           <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
             <Stack>

@@ -1,10 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useFonts } from 'expo-font';
 import { Link, Stack, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import OtpController from "./controller/otpController";
 import UserExistenceController from "./controller/userexistenceController";
 import Loader from "./loader";
+import ActivateFonts from './service/ActivateFonts';
 import AppDetails from './service/AppService';
 
 
@@ -21,6 +23,8 @@ const CreateAccountScreen = () => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [formFeedbackMsg, setFormFeedbackMsg] = useState('');
+
+    const [fontsLoaded, fontError] = useFonts(ActivateFonts);
 
 
 
@@ -55,7 +59,10 @@ const CreateAccountScreen = () => {
     };
 
 
-    
+    if (!fontsLoaded && !fontError) {
+
+        return <Loader />; // Return null or a loading indicator while fonts are loading
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -80,7 +87,7 @@ const CreateAccountScreen = () => {
                         <View className="w-full mb-4">
                             <Text className="text-gray-600 mb-2 ml-1 font-medium">First Name</Text>
                             <TextInput
-                                className="border border-gray-300 p-3 rounded-lg w-full bg-gray-50"
+                                className="border border-gray-300 p-3 color-[#333] rounded-lg w-full bg-gray-50"
                                 placeholder="Enter your first name"
                                 value={firstName}
                                 onChangeText={setFirstName}
@@ -91,7 +98,7 @@ const CreateAccountScreen = () => {
                         <View className="w-full mb-4">
                             <Text className="text-gray-600 mb-2 ml-1 font-medium">Last Name</Text>
                             <TextInput
-                                className="border border-gray-300 p-3 rounded-lg w-full bg-gray-50"
+                                className="border border-gray-300 p-3 color-[#333] rounded-lg w-full bg-gray-50"
                                 placeholder="Enter your last name"
                                 value={lastName}
                                 onChangeText={setLastName}
@@ -103,7 +110,7 @@ const CreateAccountScreen = () => {
                         <View className="w-full mb-4">
                             <Text className="text-gray-600 mb-2 ml-1 font-medium">Email</Text>
                             <TextInput
-                                className="border border-gray-300 p-3 rounded-lg w-full bg-gray-50"
+                                className="border border-gray-300 color-[#333] p-3 rounded-lg w-full bg-gray-50"
                                 placeholder="Enter your email"
                                 value={email}
                                 onChangeText={setEmail}
@@ -116,7 +123,7 @@ const CreateAccountScreen = () => {
                             <Text className="text-gray-600 mb-2 ml-1 font-medium">Pin (4 digits)</Text>
                             <View className="relative justify-center">
                                 <TextInput
-                                    className="border border-gray-300 p-3 rounded-lg w-full bg-gray-50"
+                                    className="border border-gray-300 color-[#333] p-3 rounded-lg w-full bg-gray-50"
                                     placeholder="Enter your pin"
                                     value={pin}
                                     onChangeText={setPin}
@@ -133,7 +140,7 @@ const CreateAccountScreen = () => {
                         <View className="w-full mb-4">
                             <Text className="text-gray-600 mb-2 ml-1 font-medium">Confirm Pin</Text>
                             <TextInput
-                                className="border border-gray-300 p-3 rounded-lg w-full bg-gray-50"
+                                className="border border-gray-300 color-[#333] p-3 rounded-lg w-full bg-gray-50"
                                 placeholder="Confirm your pin"
                                 value={confirmPin}
                                 onChangeText={setConfirmPin}

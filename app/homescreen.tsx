@@ -2,7 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router, useFocusEffect } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
-import { Dimensions, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import HomeController from "./controller/homecontroller";
 import Loader from "./loader";
 import useSharedStore from "./repository/store";
@@ -137,7 +137,6 @@ const HomeScreen  = ()=>{
 
   return (
         <SafeAreaView className="flex-1 bg-white">
-            <StatusBar barStyle="default" />
             <View className="flex-1 p-4">
                 <View className="h-[10%] flex-row justify-between items-center">
                     <Text className="text-lg font-monasans-bold text-gray-800">Hi, {firstname}</Text>

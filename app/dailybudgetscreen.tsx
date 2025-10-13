@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useRouter } from 'expo-router';
 import React, { useMemo, useState } from 'react';
-import { Alert, Platform, SafeAreaView, StatusBar, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Platform, SafeAreaView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import BudgetController from "./controller/budgetcontroller";
 import FeedBackPanel from './feedbackpanel';
 import Loader from './loader';
@@ -113,7 +113,6 @@ const DailyBudgetScreen = () => {
   
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
-      <StatusBar barStyle="default" />
 
       
       <View className="flex-row items-center px-4 py-8 bg-gray-50">

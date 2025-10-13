@@ -2,7 +2,7 @@ import { Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import React, { useMemo, useState } from 'react';
-import { Alert, Modal, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Modal, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Calendar, DateData } from 'react-native-calendars';
 import BudgetController from "./controller/budgetcontroller";
 import FeedBackPanel from './feedbackpanel';
@@ -139,7 +139,6 @@ const MonthlyBudgetScreen = () => {
   
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
-      <StatusBar barStyle="default" />
 
       
       <View className="flex-row items-center px-4 py-8 bg-gray-50">

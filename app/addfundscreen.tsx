@@ -4,11 +4,10 @@ import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
   SafeAreaView,
-  StatusBar,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import AppDetails from './service/AppService';
 
@@ -34,7 +33,6 @@ const AddFundScreen = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
-      <StatusBar barStyle="default" />
       <View className="flex-row items-center p-6 pb-3 bg-gray-50">
         <TouchableOpacity onPress={() => router.back()} className="mr-4">
           <Ionicons name="arrow-back" size={28} color="#1A1A1A" />

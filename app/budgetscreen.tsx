@@ -1,7 +1,7 @@
 import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { Dimensions, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import useSharedStore from './repository/store';
 import AppDetails from './service/AppService';
 
@@ -28,7 +28,6 @@ const BudgetScreen = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <StatusBar barStyle="default" />
 
       <View className="flex-row items-center px-4 py-8 bg-gray-50">
         <TouchableOpacity onPress={() => router.back()}>
